@@ -4,11 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/auth.css">
 </head>
 <body>
 <div class="container">
     <h2>Login</h2>
+
+    <!-- Display an error message if the URL contains '?error' -->
+    <div th:if="${param.error}" class="alert alert-danger">
+        <span>Invalid username or password. Please try again.</span>
+    </div>
+
+    <!-- Display a general message if provided by the controller -->
+    <div th:if="${message}" class="alert alert-info">
+        <span th:text="${message}"></span>
+    </div>
+
     <form action="/login" method="post">
         <div class="form-group">
             <label for="username">Username</label>
