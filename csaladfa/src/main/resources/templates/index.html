@@ -3,13 +3,174 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <title>Family Tree Web App</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f6f9;
+    }
+    .navbar {
+      background-color: #293550;
+    }
+    .navbar-brand {
+      color: white;
+      font-weight: 600;
+    }
+    .navbar-nav .nav-link {
+      color: white;
+      font-weight: 500;
+    }
+    .container {
+      margin-top: 50px;
+    }
+    .hero-section {
+      background-color: #293550;
+      color: white;
+      padding: 100px 0;
+      text-align: center;
+    }
+    .hero-section h1 {
+      font-size: 3rem;
+      font-weight: 600;
+    }
+    .card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .card-title {
+      font-weight: 600;
+      color: #293550;
+    }
+    .form-control {
+      border-radius: 10px;
+    }
+    .btn-custom {
+      background-color: #293550;
+      color: white;
+      border-radius: 25px;
+      font-weight: 600;
+    }
+    .btn-custom:hover {
+      background-color: #0056b3;
+    }
+    .footer {
+      background-color: #293550;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      margin-top: 50px;
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-  <h2>Welcome to the Family Tree App</h2>
-  <p>Login successful!</p>
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <a class="navbar-brand" href="/">Family Tree</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/add-family-member">Add Family Member</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/add-event">Add Event</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/family-tree">Family Tree</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<div class="hero-section">
+  <h1>Welcome to the Family Tree Web App <span th:text="${username}"></span></h1>
+  <p class="lead">Manage your family's history, add members, and see your family tree grow!</p>
 </div>
+
+<!-- Main Content Section -->
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Add Family Member</h5>
+          <form action="/add-family-member" method="post">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="relationship">Relationship</label>
+              <input type="text" class="form-control" id="relationship" name="relationship" required>
+            </div>
+            <div class="form-group">
+              <label for="parent">Parent</label>
+              <input type="text" class="form-control" id="parent" name="parent">
+            </div>
+            <button type="submit" class="btn btn-custom btn-block">Add Family Member</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Add Event</h5>
+          <form action="/add-event" method="post">
+            <div class="form-group">
+              <label for="event-name">Event Name</label>
+              <input type="text" class="form-control" id="event-name" name="event-name" required>
+            </div>
+            <div class="form-group">
+              <label for="event-date">Event Date</label>
+              <input type="date" class="form-control" id="event-date" name="event-date" required>
+            </div>
+            <div class="form-group">
+              <label for="person">Person</label>
+              <input type="text" class="form-control" id="person" name="person" required>
+            </div>
+            <button type="submit" class="btn btn-custom btn-block">Add Event</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Select Family Member</h5>
+          <form action="/family-tree" method="get">
+            <div class="form-group">
+              <label for="family-member">Family Member</label>
+              <select class="form-control" id="family-member" name="family-member" required>
+                <option value="john_doe">John Doe</option>
+                <option value="jane_doe">Jane Doe</option>
+                <option value="jim_doe">Jim Doe</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-custom btn-block">View Family Tree</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <p>&copy; 2024 Family Tree Web App | All Rights Reserved</p>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

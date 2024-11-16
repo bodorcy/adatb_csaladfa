@@ -26,23 +26,18 @@ public class UserRepository {
         String sql = "INSERT INTO user (username, password) VALUES (?, ?)";
 
         try {
-            // Perform the insert operation
             int rowsAffected = jdbcTemplate.update(sql, user.getUsername(), user.getPassword());
 
-            // If rows are affected, return the inserted user wrapped in Optional
             if (rowsAffected > 0) {
-                return 1;  // Returning the user that was successfully inserted
+                return 1;
             } else {
-                return 0;  // No rows affected, return empty Optional
+                return 0;
             }
         } catch (DataIntegrityViolationException e) {
-            // If there's a constraint violation (e.g., duplicate username), return an empty Optional
-            return 0;  // Failed to insert user, returning empty
+            return 0;
         }
     }
 
-
-    // READ: Get user by username
     public Optional<User> findUserByUsername(String username) {
         String sql = "SELECT * FROM user WHERE username = ?";
         try {
@@ -57,13 +52,11 @@ public class UserRepository {
         }
     }
 
-    // UPDATE: Update user details
     public int updateUser(Long id, User user) {
         String sql = "UPDATE user SET username = ?, password = ?, email = ? WHERE id = ?";
         return jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), id);
     }
 
-    // DELETE: Delete a user by ID
     public int deleteUser(Long id) {
         String sql = "DELETE FROM user WHERE id = ?";
         return jdbcTemplate.update(sql, id);
