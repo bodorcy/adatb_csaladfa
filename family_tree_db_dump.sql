@@ -27,8 +27,8 @@ CREATE TABLE `edits_tree` (
   `family_id` int NOT NULL,
   PRIMARY KEY (`user_id`,`family_id`),
   KEY `family_id` (`family_id`),
-  CONSTRAINT `edits_tree_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-  CONSTRAINT `edits_tree_ibfk_2` FOREIGN KEY (`family_id`) REFERENCES `family_tree` (`id`)
+  CONSTRAINT `edits_tree_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `edits_tree_ibfk_2` FOREIGN KEY (`family_id`) REFERENCES `family_tree` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -101,8 +101,8 @@ CREATE TABLE `part_of_event` (
   `role` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`event_id`,`person_id`),
   KEY `person_id` (`person_id`),
-  CONSTRAINT `part_of_event_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`),
-  CONSTRAINT `part_of_event_ibfk_2` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`)
+  CONSTRAINT `part_of_event_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `part_of_event_ibfk_2` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -127,8 +127,8 @@ CREATE TABLE `part_of_family` (
   `person_id` int NOT NULL,
   PRIMARY KEY (`family_id`,`person_id`),
   KEY `person_id` (`person_id`),
-  CONSTRAINT `part_of_family_ibfk_1` FOREIGN KEY (`family_id`) REFERENCES `family_tree` (`id`),
-  CONSTRAINT `part_of_family_ibfk_2` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`)
+  CONSTRAINT `part_of_family_ibfk_1` FOREIGN KEY (`family_id`) REFERENCES `family_tree` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `part_of_family_ibfk_2` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -159,8 +159,8 @@ CREATE TABLE `person` (
   PRIMARY KEY (`id`),
   KEY `mother_id` (`mother_id`),
   KEY `father_id` (`father_id`),
-  CONSTRAINT `person_ibfk_1` FOREIGN KEY (`mother_id`) REFERENCES `person` (`id`),
-  CONSTRAINT `person_ibfk_2` FOREIGN KEY (`father_id`) REFERENCES `person` (`id`)
+  CONSTRAINT `person_ibfk_1` FOREIGN KEY (`mother_id`) REFERENCES `person` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `person_ibfk_2` FOREIGN KEY (`father_id`) REFERENCES `person` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
