@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ContentController {
 
+    public String getCurrentUsername(){
+        return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
     @GetMapping("/login")
     public String login(){
         return "login";
@@ -19,10 +23,22 @@ public class ContentController {
     }
     @GetMapping("/index")
     public String index(Model model){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-
+        String username = getCurrentUsername();
         model.addAttribute("username", username);
-
         return "index";
+    }
+    @GetMapping("/edit")
+    public String edit(Model model){
+        //List<FamilyMember> familyMembers = familyMemberService.findAll();
+        //List<Event> events = eventService.findAll();
+        //model.addAttribute("familyMembers", familyMembers);
+        //model.addAttribute("events", events);
+        return "edit";
+    }
+    @GetMapping("/family-tree")
+    public String famly_tree(Model model){
+        //List<FamilyMember> familyMembers = familyMemberService.findByUserId(getCurrentUserId());
+        //model.addAttribute("familyMembers", familyMembers);
+        return "family-tree";
     }
 }

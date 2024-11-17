@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Family Tree</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f6f9;
+    }
+    .navbar {
+      background-color: #293550;
+    }
+    .navbar-brand {
+      color: white;
+      font-weight: 600;
+    }
+    .navbar-nav .nav-link {
+      color: white;
+      font-weight: 500;
+    }
+    .container {
+      margin-top: 50px;
+    }
+    .card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .card-title {
+      font-weight: 600;
+      color: #293550;
+    }
+    .form-control {
+      border-radius: 10px;
+    }
+    .btn-custom {
+      background-color: #293550;
+      color: white;
+      border-radius: 25px;
+      font-weight: 600;
+    }
+    .btn-custom:hover {
+      background-color: #0056b3;
+    }
+    /* Custom Tree Styling */
+    .family-tree {
+      list-style-type: none;
+      padding-left: 20px;
+    }
+    .family-tree > li {
+      padding-left: 20px;
+    }
+    .family-tree > li:before {
+      content: "→ ";
+      font-weight: bold;
+    }
+    .family-tree li li {
+      padding-left: 30px;
+    }
+    .family-member {
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <a class="navbar-brand" href="/">Family Tree</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/edit">Add Family Member</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/edit">Add Event</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/edit">Edit Family Members</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Family Tree Section -->
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Family Tree of <span th:text="${username}"></span></h5>
+
+          <!-- Family Tree Display -->
+          <div>
+            <ul class="family-tree">
+              <!-- Loop through family members recursively to display their children -->
+              <th:block th:each="member : ${familyMembers}">
+                <li>
+                  <span class="family-member" th:text="${member.name} + ' (Born: ' + ${member.dob} + ')'"></span>
+                  <!-- Check if this member has children -->
+                  <th:block th:if="${member.children}">
+                    <ul>
+                      <th:block th:each="child : ${member.children}">
+                        <li>
+                          <span class="family-member" th:text="${child.name} + ' (Born: ' + ${child.dob} + ')'"></span>
+                        </li>
+                      </th:block>
+                    </ul>
+                  </th:block>
+                </li>
+              </th:block>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

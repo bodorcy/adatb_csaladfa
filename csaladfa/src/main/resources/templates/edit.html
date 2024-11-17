@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Family Tree Web App</title>
+  <title>Manage Family Members and Events</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
@@ -25,16 +25,6 @@
     .container {
       margin-top: 50px;
     }
-    .hero-section {
-      background-color: #293550;
-      color: white;
-      padding: 100px 0;
-      text-align: center;
-    }
-    .hero-section h1 {
-      font-size: 3rem;
-      font-weight: 600;
-    }
     .card {
       border: none;
       border-radius: 15px;
@@ -55,13 +45,6 @@
     }
     .btn-custom:hover {
       background-color: #0056b3;
-    }
-    .footer {
-      background-color: #293550;
-      color: white;
-      padding: 20px;
-      text-align: center;
-      margin-top: 50px;
     }
   </style>
 </head>
@@ -90,38 +73,55 @@
   </div>
 </nav>
 
-<!-- Hero Section -->
-<div class="hero-section">
-  <h1>Welcome to the Family Tree Web App <span th:text="${username}"></span></h1>
-  <p class="lead">Manage your family's history, add members, and see your family tree grow!</p>
-</div>
-
-<!-- Main Content Section -->
+<!-- Manage Family Members and Events -->
 <div class="container">
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Add Family Member</h5>
-          <form action="/add-family-member" method="post">
+          <h5 class="card-title">Edit Family Member</h5>
+          <form action="/edit-family-member" method="post">
             <div class="form-group">
-              <label for="name">Name</label>
-              <input type="text" class="form-control" id="name" name="name" required>
+              <label for="family-member">Select Family Member</label>
+              <select class="form-control" id="family-member" name="family-member" required>
+                <option value="" disabled selected>Select Family Member</option>
+                <!-- Loop through the family members and display name and date of birth -->
+                <th:block th:each="member : ${familyMembers}">
+                  <option th:value="${member.id}" th:text="${member.name} + ' (Born: ' + ${member.dob} + ')'"></option>
+                </th:block>
+              </select>
             </div>
-            <div class="form-group">
-              <label for="relationship">Relationship</label>
-              <input type="text" class="form-control" id="relationship" name="relationship" required>
-            </div>
-            <div class="form-group">
-              <label for="parent">Parent</label>
-              <input type="text" class="form-control" id="parent" name="parent">
-            </div>
-            <button type="submit" class="btn btn-custom btn-block">Add Family Member</button>
+            <button type="submit" class="btn btn-custom btn-block">Edit Family Member</button>
           </form>
         </div>
       </div>
     </div>
-    <div class="col-md-4">
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Delete Family Member</h5>
+          <form action="/delete-family-member" method="post">
+            <div class="form-group">
+              <label for="family-member-delete">Select Family Member to Delete</label>
+              <select class="form-control" id="family-member-delete" name="family-member-delete" required>
+                <option value="" disabled selected>Select Family Member</option>
+                <!-- Loop through the family members for deletion -->
+                <th:block th:each="member : ${familyMembers}">
+                  <option th:value="${member.id}" th:text="${member.name} + ' (Born: ' + ${member.dob} + ')'"></option>
+                </th:block>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-danger btn-block">Delete Family Member</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Event Management Section -->
+  <div class="row mt-4">
+    <div class="col-md-6">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Add Event</h5>
@@ -136,37 +136,41 @@
             </div>
             <div class="form-group">
               <label for="person">Person</label>
-              <input type="text" class="form-control" id="person" name="person" required>
+              <select class="form-control" id="person" name="person" required>
+                <option value="" disabled selected>Select Family Member</option>
+                <!-- Loop through the family members to select for the event -->
+                <th:block th:each="member : ${familyMembers}">
+                  <option th:value="${member.id}" th:text="${member.name}"></option>
+                </th:block>
+              </select>
             </div>
             <button type="submit" class="btn btn-custom btn-block">Add Event</button>
           </form>
         </div>
       </div>
     </div>
-    <div class="col-md-4">
+
+    <div class="col-md-6">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Select Family Member</h5>
-          <form action="/family-tree" method="get">
+          <h5 class="card-title">Delete Event</h5>
+          <form action="/delete-event" method="post">
             <div class="form-group">
-              <label for="family-member">Family Member</label>
-              <select class="form-control" id="family-member" name="family-member" required>
-                <option value="john_doe">John Doe</option>
-                <option value="jane_doe">Jane Doe</option>
-                <option value="jim_doe">Jim Doe</option>
+              <label for="event-delete">Select Event to Delete</label>
+              <select class="form-control" id="event-delete" name="event-delete" required>
+                <option value="" disabled selected>Select Event</option>
+                <!-- Loop through existing events -->
+                <th:block th:each="event : ${events}">
+                  <option th:value="${event.id}" th:text="${event.eventName} + ' on ' + ${event.eventDate}"></option>
+                </th:block>
               </select>
             </div>
-            <button type="submit" class="btn btn-custom btn-block">View Family Tree</button>
+            <button type="submit" class="btn btn-danger btn-block">Delete Event</button>
           </form>
         </div>
       </div>
     </div>
   </div>
-</div>
-
-<!-- Footer -->
-<div class="footer">
-  <p>&copy; 2024 Family Tree Web App | All Rights Reserved</p>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
