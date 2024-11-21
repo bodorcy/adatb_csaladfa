@@ -26,7 +26,7 @@ CREATE TABLE `edits_tree` (
   `user_id` int NOT NULL,
   `family_id` int NOT NULL,
   PRIMARY KEY (`user_id`,`family_id`),
-  KEY `family_id` (`family_id`),
+  KEY `family_id` (`family_id`), --automatikus index hozzaadas optimalizalas miatt
   CONSTRAINT `edits_tree_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
   CONSTRAINT `edits_tree_ibfk_2` FOREIGN KEY (`family_id`) REFERENCES `family_tree` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
