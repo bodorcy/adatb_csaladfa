@@ -1,13 +1,21 @@
 package com.csaladfa.controller;
 
+import com.csaladfa.DAO.PersonRepository;
+import com.csaladfa.model.Person;
+import com.csaladfa.service.PersonService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
+
 @Controller
 public class ContentController {
+    @Autowired
+    PersonService personService;
 
     public String getCurrentUsername(){
         return SecurityContextHolder.getContext().getAuthentication().getName();
@@ -27,18 +35,23 @@ public class ContentController {
         model.addAttribute("username", username);
         return "index";
     }
-    @GetMapping("/edit")
-    public String edit(Model model){
-        //List<FamilyMember> familyMembers = familyMemberService.findAll();
-        //List<Event> events = eventService.findAll();
-        //model.addAttribute("familyMembers", familyMembers);
-        //model.addAttribute("events", events);
-        return "edit";
-    }
+
     @GetMapping("/family-tree")
-    public String famly_tree(Model model){
+    public String famliy_tree(Model model){
+        model.addAttribute("username", getCurrentUsername());
         //List<FamilyMember> familyMembers = familyMemberService.findByUserId(getCurrentUserId());
         //model.addAttribute("familyMembers", familyMembers);
-        return "family-tree";
+        return "edit";
+    }
+    @GetMapping("/add-family-member")
+    public String famly_tree(){
+        return "edit";
+    }
+    @GetMapping("/edit")
+    public String showPeople(Model model) {
+        List<Person> people = personService.listPeople();
+        System.out.println(people);
+        model.addAttribute("familyMembers", people);
+        return "edit";
     }
 }

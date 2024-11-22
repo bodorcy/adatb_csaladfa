@@ -46,10 +46,24 @@
     .btn-custom:hover {
       background-color: #0056b3;
     }
+    .alert-success {
+      display: block;
+      background-color: #d4edda; /* Light green */
+      color: #155724; /* Dark green */
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
   </style>
 </head>
 <body>
+
 <!-- Navigation Bar -->
+<div th:if="${successMessage != null}" class="alert alert-success">
+  <span th:text="${successMessage}"></span>
+</div>
 <nav class="navbar navbar-expand-lg navbar-dark">
   <a class="navbar-brand" href="/">Family Tree</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,31 +86,9 @@
     </ul>
   </div>
 </nav>
-
 <!-- Manage Family Members and Events -->
 <div class="container">
   <div class="row">
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Edit Family Member</h5>
-          <form action="/edit-family-member" method="post">
-            <div class="form-group">
-              <label for="family-member">Select Family Member</label>
-              <select class="form-control" id="family-member" name="family-member" required>
-                <option value="" disabled selected>Select Family Member</option>
-                <!-- Loop through the family members and display name and date of birth -->
-                <th:block th:each="member : ${familyMembers}">
-                  <option th:value="${member.id}" th:text="${member.name} + ' (Born: ' + ${member.dob} + ')'"></option>
-                </th:block>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-custom btn-block">Edit Family Member</button>
-          </form>
-        </div>
-      </div>
-    </div>
-
     <div class="col-md-6">
       <div class="card">
         <div class="card-body">
@@ -108,7 +100,7 @@
                 <option value="" disabled selected>Select Family Member</option>
                 <!-- Loop through the family members for deletion -->
                 <th:block th:each="member : ${familyMembers}">
-                  <option th:value="${member.id}" th:text="${member.name} + ' (Born: ' + ${member.dob} + ')'"></option>
+                  <option th:value="${member.id}" th:text="${member.id} + ' ' + ${member.first_name} + ' ' +${member.last_name}"></option>
                 </th:block>
               </select>
             </div>
@@ -140,7 +132,7 @@
                 <option value="" disabled selected>Select Family Member</option>
                 <!-- Loop through the family members to select for the event -->
                 <th:block th:each="member : ${familyMembers}">
-                  <option th:value="${member.id}" th:text="${member.name}"></option>
+                  <option th:value="${member.id}" th:text="${member.id} + ' ' + ${member.first_name} + ' ' +${member.last_name}"></option>
                 </th:block>
               </select>
             </div>
@@ -172,6 +164,61 @@
     </div>
   </div>
 </div>
+<div class="row mt-4">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Add Family Member</h5>
+        <form action="/add-family-member" method="post">
+
+          <div class="form-group">
+            <label for="first_name">First Name</label>
+            <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter first name" required>
+          </div>
+          <div class="form-group">
+            <label for="last_name">Last Name</label>
+            <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter last name" required>
+          </div>
+          <div class="form-group">
+            <label for="gender">Gender</label>
+            <select class="form-control" id="gender" name="gender" required>
+              <option value="" disabled selected>Select gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="date_of_birth">Date of Birth</label>
+            <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" required>
+          </div>
+          <div class="form-group">
+            <label for="father">Father (Optional)</label>
+            <select class="form-control" id="father" name="father">
+              <option value="" selected>None</option>
+              <!-- Loop through family members to list possible fathers -->
+              <th:block th:each="member : ${familyMembers}">
+                <option th:value="${member.id}" th:text="${member.id} + ' ' + ${member.first_name} + ' ' +${member.last_name}"></option>
+              </th:block>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="mother">Mother (Optional)</label>
+            <select class="form-control" id="mother" name="mother">
+              <option value="" selected>None</option>
+              <!-- Loop through family members to list possible mothers -->
+              <th:block th:each="member : ${familyMembers}">
+                <option th:value="${member.id}" th:text="${member.id} + ' ' + ${member.first_name} + ' ' + ${member.last_name}"></option>
+              </th:block>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-custom btn-block">Add Family Member</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
