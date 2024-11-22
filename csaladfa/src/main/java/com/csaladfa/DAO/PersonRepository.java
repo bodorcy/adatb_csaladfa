@@ -38,8 +38,8 @@ public class PersonRepository {
                 return "Person could not be added to family tree.";
 
         }
-        catch (DataIntegrityViolationException e){
-            return "Database error"; //bad practice :)
+        catch (DataIntegrityViolationException e) {
+            return "Database error: " + e.toString();
         }
     }
     public int deletePerson(Integer id){

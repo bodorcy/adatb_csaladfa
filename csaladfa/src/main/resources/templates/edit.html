@@ -119,25 +119,35 @@
           <h5 class="card-title">Add Event</h5>
           <form action="/add-event" method="post">
             <div class="form-group">
-              <label for="event-name">Event Name</label>
-              <input type="text" class="form-control" id="event-name" name="event-name" required>
-            </div>
-            <div class="form-group">
               <label for="event-date">Event Date</label>
-              <input type="date" class="form-control" id="event-date" name="event-date" required>
+              <input type="date" class="form-control" id="event-date" name="eventDate" required>
             </div>
+
             <div class="form-group">
-              <label for="person">Person</label>
-              <select class="form-control" id="person" name="person" required>
-                <option value="" disabled selected>Select Family Member</option>
-                <!-- Loop through the family members to select for the event -->
-                <th:block th:each="member : ${familyMembers}">
-                  <option th:value="${member.id}" th:text="${member.id} + ' ' + ${member.first_name} + ' ' +${member.last_name}"></option>
-                </th:block>
+              <label for="event-type">Event Type</label>
+              <select class="form-control" id="event-type" name="eventType" required>
+                <option value="BIRTH">Birth</option>
+                <option value="DEATH">Death</option>
+                <option value="MARRIAGE">Marriage</option>
+                <option value="DIVORCE">Divorce</option>
               </select>
             </div>
+
+            <div class="form-group">
+              <label for="persons">Select People for Event</label>
+              <select class="form-control" id="persons" name="persons">
+                <th:block th:each="member : ${familyMembers}">
+                  <option th:value="${member.id}" th:text="${member.first_name} + ' ' + ${member.last_name}"></option>
+                </th:block>
+              </select>
+              <small id="person-help" class="form-text text-muted">
+                You can select multiple family members for the event.
+              </small>
+            </div>
+
             <button type="submit" class="btn btn-custom btn-block">Add Event</button>
           </form>
+
         </div>
       </div>
     </div>
