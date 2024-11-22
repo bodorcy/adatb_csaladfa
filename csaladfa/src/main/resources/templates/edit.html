@@ -7,32 +7,22 @@
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #f4f6f9;
-    }
-    .navbar {
-      background-color: #293550;
-    }
-    .navbar-brand {
-      color: white;
-      font-weight: 600;
-    }
-    .navbar-nav .nav-link {
-      color: white;
-      font-weight: 500;
-    }
     .container {
       margin-top: 50px;
+    }
+    .row {
+      margin-bottom: 20px; /* Add spacing between rows */
     }
     .card {
       border: none;
       border-radius: 15px;
       box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px; /* Add spacing between cards */
     }
     .card-title {
       font-weight: 600;
       color: #293550;
+      margin-bottom: 20px; /* Space between title and form */
     }
     .form-control {
       border-radius: 10px;
@@ -46,16 +36,18 @@
     .btn-custom:hover {
       background-color: #0056b3;
     }
+    .btn-danger {
+      border-radius: 25px;
+    }
     .alert-success {
       display: block;
-      background-color: #d4edda; /* Light green */
-      color: #155724; /* Dark green */
+      background-color: #d4edda;
+      color: #155724;
       padding: 15px;
       margin-bottom: 20px;
       border-radius: 5px;
       font-weight: bold;
     }
-
   </style>
 </head>
 <body>
@@ -88,7 +80,7 @@
 </nav>
 <!-- Manage Family Members and Events -->
 <div class="container">
-  <div class="row">
+  <div class="row mt-6">
     <div class="col-md-6">
       <div class="card">
         <div class="card-body">
@@ -100,7 +92,7 @@
                 <option value="" disabled selected>Select Family Member</option>
                 <!-- Loop through the family members for deletion -->
                 <th:block th:each="member : ${familyMembers}">
-                  <option th:value="${member.id}" th:text="${member.id} + ' ' + ${member.first_name} + ' ' +${member.last_name}"></option>
+                  <option th:value="${member.id}" th:text="${member.first_name} + ' ' +${member.last_name} + ' ' + ${member.date_of_birth}"></option>
                 </th:block>
               </select>
             </div>
@@ -111,8 +103,40 @@
     </div>
   </div>
 
+  <div class="row mt-6">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Assign Family Member to Event</h5>
+          <form action="/assign-family-member-to-event" method="post">
+            <div class="form-group">
+              <label for="family-member">Select Family Member</label>
+              <select class="form-control" id="family-member" name="familyMemberId" required>
+                <option value="" disabled selected>Select Family Member</option>
+                <!-- Loop through family members -->
+                <th:block th:each="member : ${familyMembers}">
+                  <option th:value="${member.id}" th:text="${member.first_name} + ' ' + ${member.last_name}"></option>
+                </th:block>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="event">Select Event</label>
+              <select class="form-control" id="event" name="eventId" required>
+                <option value="" disabled selected>Select Event</option>
+                <!-- Loop through events -->
+                <th:block th:each="event : ${events}">
+                  <option th:value="${event.id}" th:text="${event.type + ' on ' + ${event.date}}"></option>
+                </th:block>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-custom btn-block">Assign Member to Event</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- Event Management Section -->
-  <div class="row mt-4">
+  <div class="row mt-6">
     <div class="col-md-6">
       <div class="card">
         <div class="card-body">
@@ -120,38 +144,22 @@
           <form action="/add-event" method="post">
             <div class="form-group">
               <label for="event-date">Event Date</label>
-              <input type="date" class="form-control" id="event-date" name="eventDate" required>
+              <input type="date" class="form-control" id="event-date" name="event_date" required>
             </div>
-
             <div class="form-group">
               <label for="event-type">Event Type</label>
-              <select class="form-control" id="event-type" name="eventType" required>
+              <select class="form-control" id="event-type" name="event_type" required>
                 <option value="BIRTH">Birth</option>
                 <option value="DEATH">Death</option>
                 <option value="MARRIAGE">Marriage</option>
                 <option value="DIVORCE">Divorce</option>
               </select>
             </div>
-
-            <div class="form-group">
-              <label for="persons">Select People for Event</label>
-              <select class="form-control" id="persons" name="persons">
-                <th:block th:each="member : ${familyMembers}">
-                  <option th:value="${member.id}" th:text="${member.first_name} + ' ' + ${member.last_name}"></option>
-                </th:block>
-              </select>
-              <small id="person-help" class="form-text text-muted">
-                You can select multiple family members for the event.
-              </small>
-            </div>
-
             <button type="submit" class="btn btn-custom btn-block">Add Event</button>
           </form>
-
         </div>
       </div>
     </div>
-
     <div class="col-md-6">
       <div class="card">
         <div class="card-body">
@@ -161,9 +169,8 @@
               <label for="event-delete">Select Event to Delete</label>
               <select class="form-control" id="event-delete" name="event-delete" required>
                 <option value="" disabled selected>Select Event</option>
-                <!-- Loop through existing events -->
                 <th:block th:each="event : ${events}">
-                  <option th:value="${event.id}" th:text="${event.eventName} + ' on ' + ${event.eventDate}"></option>
+                  <option th:value="${event.id}" th:text="${event.type + ' on ' + ${event.date}}"></option>
                 </th:block>
               </select>
             </div>
@@ -173,8 +180,7 @@
       </div>
     </div>
   </div>
-</div>
-<div class="row mt-4">
+  <div class="row mt-4">
   <div class="col-md-12">
     <div class="card">
       <div class="card-body">
@@ -228,7 +234,7 @@
     </div>
   </div>
 </div>
-
+</div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>

@@ -5,6 +5,8 @@ import com.csaladfa.model.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EventService {
     @Autowired
@@ -18,5 +20,8 @@ public class EventService {
     }
     public String addPersonToEvent(Integer person_id, Integer event_id){
         return eventRepository.addPersonToEvent(person_id, event_id);
+    }
+    public List<Event> listEvents(){
+        return eventRepository.listEvents();
     }
 }

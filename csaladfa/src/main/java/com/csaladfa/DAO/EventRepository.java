@@ -6,6 +6,10 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 
 @Repository
@@ -54,5 +58,22 @@ public class EventRepository {
     public int deleteEvent(Integer id){
         String sql = "DELETE FROM event WHERE id = ?";
         return jdbcTemplate.update(sql, id);
+    }
+    public List<Event> listEvents(){
+        String sql = "SELECT * FROM event";
+
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+        List<Event> events = new ArrayList<>();
+
+        for (Map<String, Object> row : rows){
+            Event e = new Event();
+            e.setId((Integer) row.get("id"));
+            e.setDate((Date) row.get("date"));
+            e.setType((String) row.get("type"));
+
+            events.add(e);
+        }
+
+        return events;
     }
 }

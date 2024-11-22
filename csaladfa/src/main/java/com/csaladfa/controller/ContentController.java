@@ -1,7 +1,9 @@
 package com.csaladfa.controller;
 
 import com.csaladfa.DAO.PersonRepository;
+import com.csaladfa.model.Event;
 import com.csaladfa.model.Person;
+import com.csaladfa.service.EventService;
 import com.csaladfa.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -16,6 +18,8 @@ import java.util.List;
 public class ContentController {
     @Autowired
     PersonService personService;
+    @Autowired
+    EventService eventService;
 
     public String getCurrentUsername(){
         return SecurityContextHolder.getContext().getAuthentication().getName();
@@ -47,11 +51,18 @@ public class ContentController {
     public String famly_tree(){
         return "edit";
     }
+
+    @GetMapping("/delete-event")
+    public String delet_event(){
+        return "edit";
+    }
     @GetMapping("/edit")
     public String showPeople(Model model) {
         List<Person> people = personService.listPeople();
-        System.out.println(people);
+        List<Event> events = eventService.listEvents();
+        System.out.println(events);
         model.addAttribute("familyMembers", people);
+        model.addAttribute("events", events);
         return "edit";
     }
 }
