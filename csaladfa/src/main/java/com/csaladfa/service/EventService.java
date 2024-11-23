@@ -28,4 +28,5 @@ public class EventService {
     public List<Event> listEvents(){
         return eventRepository.listEvents();
     }
+    public List<Event> listPersonsEvents(Integer id) { return eventRepository.listEventsOfPerson(id); }
 }

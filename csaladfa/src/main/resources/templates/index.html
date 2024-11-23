@@ -63,6 +63,92 @@
       text-align: center;
       margin-top: 50px;
     }
+    .card {
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .tree-container ul {
+      padding-top: 20px;
+      position: relative;
+    }
+    .tree-container ul::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      border-left: 1px solid #ccc;
+      width: 0;
+      height: 20px;
+    }
+    .tree-container li {
+      float: left;
+      text-align: center;
+      list-style-type: none;
+      position: relative;
+      padding: 20px 5px 0 5px;
+    }
+    .tree-container li::before, .tree-container li::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 50%;
+      border-top: 1px solid #ccc;
+      width: 50%;
+      height: 20px;
+    }
+    .tree-container li::after {
+      right: auto;
+      left: 50%;
+      border-left: 1px solid #ccc;
+    }
+    .tree-container .node {
+      display: inline-block;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+      text-align: center;
+    }
+    .events-table {
+      margin-top: 20px;
+    }
+    .tree {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .tree > li {
+      position: relative;
+      padding: 0.5em 0 0.5em 1em;
+      margin-left: 1em;
+    }
+
+    .tree > li:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.75em;
+      width: 1em;
+      height: 0.1em;
+      background: #333;
+    }
+
+    .tree > li ul {
+      margin-left: 1em;
+      border-left: 0.1em solid #333;
+      padding-left: 1em;
+    }
+
+    .tree span {
+      display: inline-block;
+      padding: 0.5em;
+      border: 1px solid #666;
+      border-radius: 0.3em;
+      background-color: #f9f9f9;
+      font-size: 0.9em;
+    }
+
   </style>
 </head>
 <body>
@@ -94,63 +180,21 @@
 </div>
 
 <!-- Main Content Section -->
-<div class="container">
+<div class="container mt-5">
+  <!-- Select Family Member -->
   <div class="row">
-    <div class="col-md-4">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Add Family Member</h5>
-          <form action="/add-family-member" method="post">
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input type="text" class="form-control" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-              <label for="relationship">Relationship</label>
-              <input type="text" class="form-control" id="relationship" name="relationship" required>
-            </div>
-            <div class="form-group">
-              <label for="parent">Parent</label>
-              <input type="text" class="form-control" id="parent" name="parent">
-            </div>
-            <button type="submit" class="btn btn-custom btn-block">Add Family Member</button>
-          </form>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Add Event</h5>
-          <form action="/add-event" method="post">
-            <div class="form-group">
-              <label for="event-name">Event Name</label>
-              <input type="text" class="form-control" id="event-name" name="event-name" required>
-            </div>
-            <div class="form-group">
-              <label for="event-date">Event Date</label>
-              <input type="date" class="form-control" id="event-date" name="event-date" required>
-            </div>
-            <div class="form-group">
-              <label for="person">Person</label>
-              <input type="text" class="form-control" id="person" name="person" required>
-            </div>
-            <button type="submit" class="btn btn-custom btn-block">Add Event</button>
-          </form>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
+    <div class="col-md-12">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Select Family Member</h5>
-          <form action="/family-tree" method="get">
+          <form action="/" method="get">
             <div class="form-group">
-              <label for="family-member">Family Member</label>
-              <select class="form-control" id="family-member" name="family-member" required>
-                <option value="john_doe">John Doe</option>
-                <option value="jane_doe">Jane Doe</option>
-                <option value="jim_doe">Jim Doe</option>
+              <label for="family-member">Select Family Member</label>
+              <select class="form-control" id="family-member" name="family-member-id" required>
+                <option value="" disabled selected>Select Family Member</option>
+                <th:block th:each="member : ${familyMembers}">
+                  <option th:value="${member.id}" th:text="${member.first_name} + ' ' + ${member.last_name} + ' (' + ${member.date_of_birth} + ')'"></option>
+                </th:block>
               </select>
             </div>
             <button type="submit" class="btn btn-custom btn-block">View Family Tree</button>
@@ -159,7 +203,93 @@
       </div>
     </div>
   </div>
+
+  <!-- Family Tree Section -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <!-- Family Tree Display -->
+          <div th:if="${person != null}">
+            <ul class="tree">
+              <!-- Parents Section -->
+              <li>
+                <strong>Parents:</strong>
+                <ul>
+                  <li th:each="parent : ${parents}">
+                    <span th:text="${parent.first_name} + ' ' + ${parent.last_name}"></span>
+                  </li>
+                  <li th:if="${parents.size() == 0}">
+                    <span>No parents available</span>
+                  </li>
+                </ul>
+              </li>
+
+              <!-- Selected Person -->
+              <li>
+                <strong>Selected Person:</strong>
+                <span th:text="${person.first_name} + ' ' + ${person.last_name}"></span>
+              </li>
+
+              <!-- Children Section -->
+              <li>
+                <strong>Children:</strong>
+                <ul>
+                  <li th:each="child : ${children}">
+                    <span th:text="${child.first_name} + ' ' + ${child.last_name}"></span>
+                  </li>
+                  <li th:if="${children.size() == 0}">
+                    <span>No children available</span>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <!-- Fallback for No Selection -->
+          <div th:if="${person == null}">
+            <p>Please select a family member to view their family tree and events.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Events Section -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Events</h5>
+          <div th:if="${events != null && !events.isEmpty()}">
+            <table class="table table-striped events-table">
+              <thead>
+              <tr>
+                <th>Event Type</th>
+                <th>Event Date</th>
+                <th>Details</th>
+              </tr>
+              </thead>
+              <tbody>
+              <th:block th:each="event : ${events}">
+                <tr>
+                  <td th:text="${event.type}">Event Type</td>
+                  <td th:text="${event.date}">Event Date</td>
+                  <td th:text="${event.name}">Event Details</td>
+                </tr>
+              </th:block>
+              </tbody>
+            </table>
+          </div>
+          <div th:if="${events == null || events.isEmpty()}">
+            <p>No events available for this family member.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+
 
 <!-- Footer -->
 <div class="footer">

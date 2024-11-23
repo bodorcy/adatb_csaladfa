@@ -12,6 +12,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -36,11 +38,28 @@ public class ContentController {
     public String register(){
         return "register";
     }
-    @GetMapping("/index")
-    public String index(Model model){
-        String username = getCurrentUsername();
-        model.addAttribute("username", username);
-        return "index";
+    @GetMapping("/")
+    public String index(Model model, @RequestParam(name = "family-member-id", required = false) Integer id) {
+        // Add family members list for dropdown menu
+        model.addAttribute("familyMembers", personService.listPeople());
+        model.addAttribute("trees", familyTreeService.listTrees());
+        model.addAttribute("username", getCurrentUsername());
+
+        if (id != null) {
+            // If a family member is selected, populate additional data
+            model.addAttribute("person", personService.getPersonById(id));
+            model.addAttribute("parents", personService.getParents(id));
+            model.addAttribute("children", personService.getChildren(id));
+            model.addAttribute("events", eventService.listPersonsEvents(id));
+        } else {
+            // Add default empty attributes for initial load
+            model.addAttribute("person", null);
+            model.addAttribute("parents", null);
+            model.addAttribute("children", null);
+            model.addAttribute("events", null);
+        }
+
+        return "index"; // Render the index.html template
     }
 
     @GetMapping("/family-tree")

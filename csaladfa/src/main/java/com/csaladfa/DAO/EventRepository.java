@@ -89,9 +89,9 @@ public class EventRepository {
         return events;
     }
     public List<Event> listEventsOfPerson(Integer person_id){
-        String sql = "SELECT * FROM event WHERE id = ?";
+        String sql = "SELECT * FROM event WHERE id IN (SELECT event_id FROM part_of_event WHERE person_id = ?)";
 
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, person_id);
         List<Event> events = new ArrayList<>();
 
         for (Map<String, Object> row : rows){
