@@ -15,31 +15,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
---
--- Table structure for table `edits_tree`
---
-
-DROP TABLE IF EXISTS `edits_tree`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `edits_tree` (
-  `user_id` int NOT NULL,
-  `family_id` int NOT NULL,
-  PRIMARY KEY (`user_id`,`family_id`),
-  KEY `family_id` (`family_id`), --automatikus index hozzaadas optimalizalas miatt
-  CONSTRAINT `edits_tree_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `edits_tree_ibfk_2` FOREIGN KEY (`family_id`) REFERENCES `family_tree` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `edits_tree`
---
-
-LOCK TABLES `edits_tree` WRITE;
-/*!40000 ALTER TABLE `edits_tree` DISABLE KEYS */;
-/*!40000 ALTER TABLE `edits_tree` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `event`
@@ -198,6 +173,32 @@ INSERT INTO `user` VALUES (1,'test','$2a$10$UjD16k70lJDYp/pfBcBr8OzmqQj6ALNarlpq
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+--
+-- Table structure for table `edits_tree`
+--
+
+DROP TABLE IF EXISTS `edits_tree`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `edits_tree` (
+  `user_id` int NOT NULL,
+  `family_id` int NOT NULL,
+  PRIMARY KEY (`user_id`,`family_id`),
+  KEY `family_id` (`family_id`),
+  CONSTRAINT `edits_tree_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `edits_tree_ibfk_2` FOREIGN KEY (`family_id`) REFERENCES `family_tree` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `edits_tree`
+--
+
+LOCK TABLES `edits_tree` WRITE;
+/*!40000 ALTER TABLE `edits_tree` DISABLE KEYS */;
+/*!40000 ALTER TABLE `edits_tree` ENABLE KEYS */;
+UNLOCK TABLES;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
