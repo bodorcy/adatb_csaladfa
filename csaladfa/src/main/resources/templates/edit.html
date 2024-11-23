@@ -82,38 +82,16 @@
         <a class="nav-link" href="/">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/edit">Add Family Member</a>
+        <a class="nav-link" href="/edit">Edit Family Members and Events</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/edit">Add Event</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/family-tree">Family Tree</a>
+        <a class="nav-link" href="/family-tree">Manage Family Trees</a>
       </li>
     </ul>
   </div>
 </nav>
 <!-- Manage Family Members and Events -->
 <div class="container">
-  <div class="row mt-6">
-    <div class="col-md-6">
-    </div>
-  </div>
-
-  <div class="row mt-6">
-    <div class="col-md-6">
-
-    </div>
-  </div>
-  <!-- Event Management Section -->
-  <div class="row mt-6">
-    <div class="col-md-6">
-
-    </div>
-    <div class="col-md-6">
-
-    </div>
-  </div>
   <div class="row mt-4">
   <div class="col-md-12">
     <div class="card">
@@ -148,7 +126,7 @@
               <option value="" selected>None</option>
               <!-- Loop through family members to list possible fathers -->
               <th:block th:each="member : ${familyMembers}">
-                <option th:value="${member.id}" th:text="${member.id} + ' ' + ${member.first_name} + ' ' +${member.last_name}"></option>
+                <option th:value="${member.id}" th:text="${member.first_name} + ' ' + ${member.last_name} + ' ' + ${member.date_of_birth}"></option>
               </th:block>
             </select>
           </div>
@@ -158,7 +136,7 @@
               <option value="" selected>None</option>
               <!-- Loop through family members to list possible mothers -->
               <th:block th:each="member : ${familyMembers}">
-                <option th:value="${member.id}" th:text="${member.id} + ' ' + ${member.first_name} + ' ' + ${member.last_name}"></option>
+                <option th:value="${member.id}" th:text="${member.first_name} + ' ' + ${member.last_name} + ' ' + ${member.date_of_birth}"></option>
               </th:block>
             </select>
           </div>
@@ -183,6 +161,10 @@
         <div class="card-body">
           <h5 class="card-title">Add Event</h5>
           <form action="/add-event" method="post">
+            <div class="form-group">
+              <label for="event-name">Event name</label>
+              <input type="text" class="form-control" id="event-name" name="event_name" required>
+            </div>
             <div class="form-group">
               <label for="event-date">Event Date</label>
               <input type="date" class="form-control" id="event-date" name="event_date" required>
@@ -212,7 +194,7 @@
               <select class="form-control" id="family-member" name="family-member-id" required>
                 <option value="" disabled selected>Select Family Member</option>
                 <th:block th:each="member : ${familyMembers}">
-                  <option th:value="${member.id}" th:text="${member.first_name} + ' ' + ${member.last_name}"></option>
+                  <option th:value="${member.id}" th:text="${member.first_name} + ' ' + ${member.last_name} + ' ' + ${member.date_of_birth}"></option>
                 </th:block>
               </select>
             </div>
@@ -221,7 +203,7 @@
               <select class="form-control" id="event" name="event-id" required>
                 <option value="" disabled selected>Select Event</option>
                 <th:block th:each="event : ${events}">
-                  <option th:value="${event.id}" th:text="${event.type} + ' on ' + ${event.date}"></option>
+                  <option th:value="${event.id}" th:text="${event.name} + ' on ' + ${event.date} + ' (' + ${event.type} + ')'"></option>
                 </th:block>
               </select>
             </div>
@@ -245,7 +227,7 @@
               <select class="form-control" id="event-delete" name="event-delete" required>
                 <option value="" disabled selected>Select Event</option>
                 <th:block th:each="event : ${events}">
-                  <option th:value="${event.id}" th:text="${event.type} + ' on ' + ${event.date}"></option>
+                  <option th:value="${event.id}" th:text="${event.name} + ' on ' + ${event.date} + ' (' + ${event.type} + ')'"></option>
                 </th:block>
               </select>
             </div>

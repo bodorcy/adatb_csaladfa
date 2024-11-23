@@ -14,10 +14,11 @@ public class EventController {
     private EventService eventService;
 
     @PostMapping("/add-event")
-    public String addEvent(RedirectAttributes redirectAttributes, @RequestParam String event_date, @RequestParam String event_type){
+    public String addEvent(RedirectAttributes redirectAttributes,@RequestParam String event_name, @RequestParam String event_date, @RequestParam String event_type){
         Event e = new Event();
         e.setDate(event_date);
         e.setType(event_type);
+        e.setName(event_name);
 
         redirectAttributes.addFlashAttribute("successMessage", eventService.insertEvent(e));
 

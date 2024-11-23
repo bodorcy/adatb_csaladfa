@@ -16,9 +16,9 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String type;
     private LocalDate date;
+    private String name;
 
     @Enumerated(EnumType.STRING)
     private EventType eventType;

@@ -28,18 +28,19 @@ public class EventRepository {
         e.setId((Integer) row.get("id"));
         e.setDate((Date) row.get("date"));
         e.setType((String) row.get("type"));
+        e.setName((String) row.get("name"));
 
         return e;
     }
 
     public String createEvent(Event event){
-        String sql = "INSERT INTO event (type, date) VALUES(? ,?)";
+        String sql = "INSERT INTO event (type, date, name) VALUES(? ,?, ?)";
 
         try{
-            int rowsAffected = jdbcTemplate.update(sql, event.getType(), event.getDate().toString());
+            int rowsAffected = jdbcTemplate.update(sql, event.getType(), event.getDate().toString(), event.getName());
 
             if(rowsAffected > 0)
-                return "Event added with id: " + event.getId();
+                return "Event adde: " + event.getName();
             else
                 return "Event could not be added.";
         }
@@ -80,6 +81,7 @@ public class EventRepository {
             e.setId((Integer) row.get("id"));
             e.setDate((Date) row.get("date"));
             e.setType((String) row.get("type"));
+            e.setName((String) row.get("name"));
 
             events.add(e);
         }
@@ -97,6 +99,7 @@ public class EventRepository {
             e.setId((Integer) row.get("id"));
             e.setDate((Date) row.get("date"));
             e.setType((String) row.get("type"));
+            e.setName((String) row.get("name"));
 
             events.add(e);
         }
