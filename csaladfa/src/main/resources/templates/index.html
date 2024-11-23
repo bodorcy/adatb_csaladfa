@@ -68,87 +68,81 @@
       border-radius: 10px;
       box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     }
-    .tree-container ul {
-      padding-top: 20px;
-      position: relative;
-    }
-    .tree-container ul::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      border-left: 1px solid #ccc;
-      width: 0;
-      height: 20px;
-    }
-    .tree-container li {
-      float: left;
-      text-align: center;
-      list-style-type: none;
-      position: relative;
-      padding: 20px 5px 0 5px;
-    }
-    .tree-container li::before, .tree-container li::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 50%;
-      border-top: 1px solid #ccc;
-      width: 50%;
-      height: 20px;
-    }
-    .tree-container li::after {
-      right: auto;
-      left: 50%;
-      border-left: 1px solid #ccc;
-    }
-    .tree-container .node {
-      display: inline-block;
-      border: 1px solid #ccc;
-      padding: 10px;
-      border-radius: 5px;
-      text-align: center;
-    }
-    .events-table {
-      margin-top: 20px;
-    }
-    .tree {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
+    .fancy-tree {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      font-family: Arial, sans-serif;
     }
 
-    .tree > li {
-      position: relative;
-      padding: 0.5em 0 0.5em 1em;
-      margin-left: 1em;
+    .tree-level {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
     }
 
-    .tree > li:before {
+    .tree-node {
+      text-align: center;
+      padding: 10px 15px;
+      background: #f0f8ff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      font-size: 1rem;
+      color: #333;
+      min-width: 120px;
+      position: relative;
+    }
+
+    .selected-person {
+      background: #ffeeba;
+      font-weight: bold;
+      color: #444;
+    }
+
+    .tree-connector {
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+
+    .connector-line {
+      width: 2px;
+      height: 20px;
+      background: #aaa;
+      position: relative;
+    }
+
+    .tree-connector::before,
+    .tree-connector::after {
       content: "";
       position: absolute;
-      left: 0;
-      top: 0.75em;
-      width: 1em;
-      height: 0.1em;
-      background: #333;
+      top: 50%;
+      width: 30px;
+      height: 2px;
+      background: #aaa;
     }
 
-    .tree > li ul {
-      margin-left: 1em;
-      border-left: 0.1em solid #333;
-      padding-left: 1em;
+    .tree-connector::before {
+      left: -30px;
     }
 
-    .tree span {
-      display: inline-block;
-      padding: 0.5em;
-      border: 1px solid #666;
-      border-radius: 0.3em;
-      background-color: #f9f9f9;
-      font-size: 0.9em;
+    .tree-connector::after {
+      right: -30px;
     }
 
+    @media (max-width: 768px) {
+      .tree-level {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .tree-connector::before,
+      .tree-connector::after {
+        width: 15px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -211,39 +205,44 @@
         <div class="card-body">
           <!-- Family Tree Display -->
           <div th:if="${person != null}">
-            <ul class="tree">
+            <div class="fancy-tree">
               <!-- Parents Section -->
-              <li>
-                <strong>Parents:</strong>
-                <ul>
-                  <li th:each="parent : ${parents}">
-                    <span th:text="${parent.first_name} + ' ' + ${parent.last_name}"></span>
-                  </li>
-                  <li th:if="${parents.size() == 0}">
-                    <span>No parents available</span>
-                  </li>
-                </ul>
-              </li>
+              <div class="tree-level parents">
+                <div th:each="parent : ${parents}" class="tree-node">
+                  <span th:text="${parent.first_name} + ' ' + ${parent.last_name}"></span>
+                </div>
+                <div th:if="${parents.size() == 0}" class="tree-node">
+                  <span>No parents available</span>
+                </div>
+              </div>
+
+              <!-- Connector to Person -->
+              <div class="tree-connector">
+                <span class="connector-line"></span>
+              </div>
 
               <!-- Selected Person -->
-              <li>
-                <strong>Selected Person:</strong>
-                <span th:text="${person.first_name} + ' ' + ${person.last_name}"></span>
-              </li>
+              <div class="tree-level person">
+                <div class="tree-node selected-person">
+                  <strong th:text="${person.first_name} + ' ' + ${person.last_name}"></strong>
+                </div>
+              </div>
+
+              <!-- Connector to Children -->
+              <div class="tree-connector">
+                <span class="connector-line"></span>
+              </div>
 
               <!-- Children Section -->
-              <li>
-                <strong>Children:</strong>
-                <ul>
-                  <li th:each="child : ${children}">
-                    <span th:text="${child.first_name} + ' ' + ${child.last_name}"></span>
-                  </li>
-                  <li th:if="${children.size() == 0}">
-                    <span>No children available</span>
-                  </li>
-                </ul>
-              </li>
-            </ul>
+              <div class="tree-level children">
+                <div th:each="child : ${children}" class="tree-node">
+                  <span th:text="${child.first_name} + ' ' + ${child.last_name}"></span>
+                </div>
+                <div th:if="${children.size() == 0}" class="tree-node">
+                  <span>No children available</span>
+                </div>
+              </div>
+            </div>
           </div>
           <!-- Fallback for No Selection -->
           <div th:if="${person == null}">
@@ -253,6 +252,7 @@
       </div>
     </div>
   </div>
+
 
   <!-- Events Section -->
   <div class="row">
