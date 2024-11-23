@@ -17,15 +17,22 @@ public class EventRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public boolean eventAlreadyExists(Event event){
-        String sql = "SELECT COUNT(*) FROM event WHERE id = ?";
-        return 0 < jdbcTemplate.queryForObject(sql, int.class, event.getId());
+    public boolean personAlreadyInEvent(Integer person_id, Integer event_id){
+        String sql = "SELECT COUNT(*) FROM part_of_event WHERE event_id = ? AND person_id = ?";
+        return 0 < jdbcTemplate.queryForObject(sql, int.class, person_id, event_id);
+    }
+    public Event getEvent(Integer id){
+        Map<String, Object> row = jdbcTemplate.queryForMap("SELECT * FROM event WHERE id = ?", id);
+
+        Event e = new Event();
+        e.setId((Integer) row.get("id"));
+        e.setDate((Date) row.get("date"));
+        e.setType((String) row.get("type"));
+
+        return e;
     }
 
     public String createEvent(Event event){
-        if(eventAlreadyExists(event))
-            return "Event already exists.";
-
         String sql = "INSERT INTO event (type, date) VALUES(? ,?)";
 
         try{
@@ -41,6 +48,9 @@ public class EventRepository {
         }
     }
     public String addPersonToEvent(Integer person_id, Integer event_id){
+        if(personAlreadyInEvent(person_id, event_id))
+            return "Person already in the selected even.";
+
         String sql = "INSERT INTO part_of_event (event_id, person_id) VALUES(?, ?)";
 
         try{
@@ -75,5 +85,49 @@ public class EventRepository {
         }
 
         return events;
+    }
+    public List<Event> listEventsOfPerson(Integer person_id){
+        String sql = "SELECT * FROM event WHERE id = ?";
+
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+        List<Event> events = new ArrayList<>();
+
+        for (Map<String, Object> row : rows){
+            Event e = new Event();
+            e.setId((Integer) row.get("id"));
+            e.setDate((Date) row.get("date"));
+            e.setType((String) row.get("type"));
+
+            events.add(e);
+        }
+
+        return events;
+    }
+    public boolean personIsMarried(Integer person_id){
+
+        Integer marriages = jdbcTemplate.queryForObject(
+                "SELECT COUNT(*) FROM event JOIN part_of_event ON event.id = part_of_event.event_id WHERE person_id = ? AND type = 'MARRIAGE'",
+                Integer.class, person_id);
+
+        Integer divorces = jdbcTemplate.queryForObject(
+                "SELECT COUNT(*) FROM event JOIN part_of_event ON event.id = part_of_event.event_id WHERE person_id = ? AND type = 'DIVORCE'",
+                Integer.class, person_id);
+
+        if(marriages == 0)
+            return false;
+        if(divorces == 0)
+            return true;
+
+        String sql = "SELECT " +
+                "DATEDIFF(d.date, m.date) AS date_difference " +
+                "FROM " +
+                "(SELECT date FROM event JOIN part_of_event ON event.id = part_of_event.event_id WHERE person_id = ? AND type = 'MARRIAGE' ORDER BY date DESC LIMIT 1) m " +
+                "JOIN " +
+                "(SELECT date FROM event JOIN part_of_event ON event.id = part_of_event.event_id WHERE person_id = ? AND type = 'DIVORCE' ORDER BY date DESC LIMIT 1) d " +
+                "ON 1 = 1;";
+
+        Integer diff_in_days = jdbcTemplate.queryForObject(sql, Integer.class, person_id, person_id);
+
+        return diff_in_days != null && diff_in_days <= 0;
     }
 }

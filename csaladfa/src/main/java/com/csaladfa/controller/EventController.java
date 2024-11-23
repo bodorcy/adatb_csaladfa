@@ -25,8 +25,13 @@ public class EventController {
     }
     @PostMapping("/delete-event")
     public String deleteEvent(RedirectAttributes redirectAttributes, @RequestParam("event-delete") int id){
-        System.out.println(id);
         redirectAttributes.addFlashAttribute("successMessage", eventService.deleteEvent(id));
+
+        return "redirect:/edit";
+    }
+    @PostMapping("/assign-family-member-to-event")
+    public String addPersonToEvent(RedirectAttributes redirectAttributes, @RequestParam("family-member-id") int person_id, @RequestParam("event-id") int event_id){
+        redirectAttributes.addFlashAttribute("successMessage", eventService.addPersonToEvent(person_id, event_id));
 
         return "redirect:/edit";
     }

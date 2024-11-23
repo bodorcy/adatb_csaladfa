@@ -111,7 +111,7 @@
           <form action="/assign-family-member-to-event" method="post">
             <div class="form-group">
               <label for="family-member">Select Family Member</label>
-              <select class="form-control" id="family-member" name="familyMemberId" required>
+              <select class="form-control" id="family-member" name="family-member-id" required>
                 <option value="" disabled selected>Select Family Member</option>
                 <!-- Loop through family members -->
                 <th:block th:each="member : ${familyMembers}">
@@ -121,11 +121,11 @@
             </div>
             <div class="form-group">
               <label for="event">Select Event</label>
-              <select class="form-control" id="event" name="eventId" required>
+              <select class="form-control" id="event" name="event-id" required>
                 <option value="" disabled selected>Select Event</option>
                 <!-- Loop through events -->
                 <th:block th:each="event : ${events}">
-                  <option th:value="${event.id}" th:text="${event.type + ' on ' + ${event.date}}"></option>
+                  <option th:value="${event.id}" th:text="${event.type} + ' on ' + ${event.date}"></option>
                 </th:block>
               </select>
             </div>
@@ -170,7 +170,7 @@
               <select class="form-control" id="event-delete" name="event-delete" required>
                 <option value="" disabled selected>Select Event</option>
                 <th:block th:each="event : ${events}">
-                  <option th:value="${event.id}" th:text="${event.type + ' on ' + ${event.date}}"></option>
+                  <option th:value="${event.id}" th:text="${event.type} + ' on ' + ${event.date}"></option>
                 </th:block>
               </select>
             </div>

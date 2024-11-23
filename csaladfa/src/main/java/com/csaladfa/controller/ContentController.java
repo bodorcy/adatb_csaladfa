@@ -57,12 +57,16 @@ public class ContentController {
         return "edit";
     }
     @GetMapping("/edit")
-    public String showPeople(Model model) {
+    public String list(Model model) {
         List<Person> people = personService.listPeople();
         List<Event> events = eventService.listEvents();
         System.out.println(events);
         model.addAttribute("familyMembers", people);
         model.addAttribute("events", events);
+        return "edit";
+    }
+    @GetMapping("/assign-family-member-to-event")
+    public String assign_person_to_event(){
         return "edit";
     }
 }
