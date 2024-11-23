@@ -4,6 +4,7 @@ import com.csaladfa.DAO.PersonRepository;
 import com.csaladfa.model.Event;
 import com.csaladfa.model.Person;
 import com.csaladfa.service.EventService;
+import com.csaladfa.service.FamilyTreeService;
 import com.csaladfa.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -20,6 +21,8 @@ public class ContentController {
     PersonService personService;
     @Autowired
     EventService eventService;
+    @Autowired
+    FamilyTreeService familyTreeService;
 
     public String getCurrentUsername(){
         return SecurityContextHolder.getContext().getAuthentication().getName();
@@ -42,10 +45,9 @@ public class ContentController {
 
     @GetMapping("/family-tree")
     public String famliy_tree(Model model){
-        model.addAttribute("username", getCurrentUsername());
-        //List<FamilyMember> familyMembers = familyMemberService.findByUserId(getCurrentUserId());
-        //model.addAttribute("familyMembers", familyMembers);
-        return "edit";
+        model.addAttribute("familyMembers", personService.listPeople());
+        model.addAttribute("trees", familyTreeService.listTrees());
+        return "family-tree";
     }
     @GetMapping("/add-family-member")
     public String famly_tree(){
@@ -60,7 +62,6 @@ public class ContentController {
     public String list(Model model) {
         List<Person> people = personService.listPeople();
         List<Event> events = eventService.listEvents();
-        System.out.println(events);
         model.addAttribute("familyMembers", people);
         model.addAttribute("events", events);
         return "edit";

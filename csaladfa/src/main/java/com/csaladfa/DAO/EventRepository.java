@@ -39,7 +39,7 @@ public class EventRepository {
             int rowsAffected = jdbcTemplate.update(sql, event.getType(), event.getDate().toString());
 
             if(rowsAffected > 0)
-                return "Event added!";
+                return "Event added with id: " + event.getId();
             else
                 return "Event could not be added.";
         }

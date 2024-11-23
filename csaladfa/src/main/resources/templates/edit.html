@@ -97,102 +97,21 @@
 <div class="container">
   <div class="row mt-6">
     <div class="col-md-6">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Delete Family Member</h5>
-          <form action="/delete-family-member" method="post">
-            <div class="form-group">
-              <label for="family-member-delete">Select Family Member to Delete</label>
-              <select class="form-control" id="family-member-delete" name="family-member-delete" required>
-                <option value="" disabled selected>Select Family Member</option>
-                <!-- Loop through the family members for deletion -->
-                <th:block th:each="member : ${familyMembers}">
-                  <option th:value="${member.id}" th:text="${member.first_name} + ' ' +${member.last_name} + ' ' + ${member.date_of_birth}"></option>
-                </th:block>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-danger btn-block">Delete Family Member</button>
-          </form>
-        </div>
-      </div>
     </div>
   </div>
 
   <div class="row mt-6">
     <div class="col-md-6">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Assign Family Member to Event</h5>
-          <form action="/assign-family-member-to-event" method="post">
-            <div class="form-group">
-              <label for="family-member">Select Family Member</label>
-              <select class="form-control" id="family-member" name="family-member-id" required>
-                <option value="" disabled selected>Select Family Member</option>
-                <!-- Loop through family members -->
-                <th:block th:each="member : ${familyMembers}">
-                  <option th:value="${member.id}" th:text="${member.first_name} + ' ' + ${member.last_name}"></option>
-                </th:block>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="event">Select Event</label>
-              <select class="form-control" id="event" name="event-id" required>
-                <option value="" disabled selected>Select Event</option>
-                <!-- Loop through events -->
-                <th:block th:each="event : ${events}">
-                  <option th:value="${event.id}" th:text="${event.type} + ' on ' + ${event.date}"></option>
-                </th:block>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-custom btn-block">Assign Member to Event</button>
-          </form>
-        </div>
-      </div>
+
     </div>
   </div>
   <!-- Event Management Section -->
   <div class="row mt-6">
     <div class="col-md-6">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Add Event</h5>
-          <form action="/add-event" method="post">
-            <div class="form-group">
-              <label for="event-date">Event Date</label>
-              <input type="date" class="form-control" id="event-date" name="event_date" required>
-            </div>
-            <div class="form-group">
-              <label for="event-type">Event Type</label>
-              <select class="form-control" id="event-type" name="event_type" required>
-                <option value="BIRTH">Birth</option>
-                <option value="DEATH">Death</option>
-                <option value="MARRIAGE">Marriage</option>
-                <option value="DIVORCE">Divorce</option>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-custom btn-block">Add Event</button>
-          </form>
-        </div>
-      </div>
+
     </div>
     <div class="col-md-6">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Delete Event</h5>
-          <form action="/delete-event" method="post">
-            <div class="form-group">
-              <label for="event-delete">Select Event to Delete</label>
-              <select class="form-control" id="event-delete" name="event-delete" required>
-                <option value="" disabled selected>Select Event</option>
-                <th:block th:each="event : ${events}">
-                  <option th:value="${event.id}" th:text="${event.type} + ' on ' + ${event.date}"></option>
-                </th:block>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-danger btn-block">Delete Event</button>
-          </form>
-        </div>
-      </div>
+
     </div>
   </div>
   <div class="row mt-4">
@@ -250,6 +169,114 @@
   </div>
 </div>
 </div>
+
+
+
+
+
+<div class="container">
+  <!-- Row 1: Add Event and Assign Family Member -->
+  <div class="row mt-6">
+    <!-- Add Event -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Add Event</h5>
+          <form action="/add-event" method="post">
+            <div class="form-group">
+              <label for="event-date">Event Date</label>
+              <input type="date" class="form-control" id="event-date" name="event_date" required>
+            </div>
+            <div class="form-group">
+              <label for="event-type">Event Type</label>
+              <select class="form-control" id="event-type" name="event_type" required>
+                <option value="BIRTH">Birth</option>
+                <option value="DEATH">Death</option>
+                <option value="MARRIAGE">Marriage</option>
+                <option value="DIVORCE">Divorce</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-custom btn-block">Add Event</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Assign Family Member to Event -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Assign Family Member to Event</h5>
+          <form action="/assign-family-member-to-event" method="post">
+            <div class="form-group">
+              <label for="family-member">Select Family Member</label>
+              <select class="form-control" id="family-member" name="family-member-id" required>
+                <option value="" disabled selected>Select Family Member</option>
+                <th:block th:each="member : ${familyMembers}">
+                  <option th:value="${member.id}" th:text="${member.first_name} + ' ' + ${member.last_name}"></option>
+                </th:block>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="event">Select Event</label>
+              <select class="form-control" id="event" name="event-id" required>
+                <option value="" disabled selected>Select Event</option>
+                <th:block th:each="event : ${events}">
+                  <option th:value="${event.id}" th:text="${event.type} + ' on ' + ${event.date}"></option>
+                </th:block>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-custom btn-block">Assign Member to Event</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 2: Delete Event and Delete Family Member -->
+  <div class="row mt-6">
+    <!-- Delete Event -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Delete Event</h5>
+          <form action="/delete-event" method="post">
+            <div class="form-group">
+              <label for="event-delete">Select Event to Delete</label>
+              <select class="form-control" id="event-delete" name="event-delete" required>
+                <option value="" disabled selected>Select Event</option>
+                <th:block th:each="event : ${events}">
+                  <option th:value="${event.id}" th:text="${event.type} + ' on ' + ${event.date}"></option>
+                </th:block>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-danger btn-block">Delete Event</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Delete Family Member -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Delete Family Member</h5>
+          <form action="/delete-family-member" method="post">
+            <div class="form-group">
+              <label for="family-member-delete">Select Family Member to Delete</label>
+              <select class="form-control" id="family-member-delete" name="family-member-delete" required>
+                <option value="" disabled selected>Select Family Member</option>
+                <th:block th:each="member : ${familyMembers}">
+                  <option th:value="${member.id}" th:text="${member.first_name} + ' ' +${member.last_name} + ' ' + ${member.date_of_birth}"></option>
+                </th:block>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-danger btn-block">Delete Family Member</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>

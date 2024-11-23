@@ -64,10 +64,22 @@
     .family-member {
       font-weight: 500;
     }
+    .alert-success {
+      display: block;
+      background-color: #d4edda;
+      color: #155724;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
 <!-- Navigation Bar -->
+<div th:if="${successMessage != null}" class="alert alert-success">
+  <span th:text="${successMessage}"></span>
+</div>
 <nav class="navbar navbar-expand-lg navbar-dark">
   <a class="navbar-brand" href="/">Family Tree</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -93,34 +105,101 @@
 
 <!-- Family Tree Section -->
 <div class="container">
-  <div class="row">
-    <div class="col-md-12">
+  <div class="row mt-6">
+    <!-- Create Family Tree Section -->
+    <div class="col-md-6">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Family Tree of <span th:text="${username}"></span></h5>
+          <h5 class="card-title">Create Family Tree</h5>
+          <form action="/create-family-tree" method="post">
+            <div class="form-group">
+              <label for="tree-name">Family Tree Name</label>
+              <input type="text" class="form-control" id="tree-name" name="tree_name" placeholder="Enter tree name" required>
+            </div>
+            <button type="submit" class="btn btn-custom btn-block">Create Family Tree</button>
+          </form>
+        </div>
+      </div>
+    </div>
 
-          <!-- Family Tree Display -->
-          <div>
-            <ul class="family-tree">
-              <!-- Loop through family members recursively to display their children -->
-              <th:block th:each="member : ${familyMembers}">
-                <li>
-                  <span class="family-member" th:text="${member.name} + ' (Born: ' + ${member.dob} + ')'"></span>
-                  <!-- Check if this member has children -->
-                  <th:block th:if="${member.children}">
-                    <ul>
-                      <th:block th:each="child : ${member.children}">
-                        <li>
-                          <span class="family-member" th:text="${child.name} + ' (Born: ' + ${child.dob} + ')'"></span>
-                        </li>
-                      </th:block>
-                    </ul>
-                  </th:block>
-                </li>
-              </th:block>
-            </ul>
-          </div>
+    <!-- Delete Family Tree Section -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Delete Family Tree</h5>
+          <form action="/delete-family-tree" method="post">
+            <div class="form-group">
+              <label for="tree-delete">Select Family Tree to Delete</label>
+              <select class="form-control" id="tree-delete" name="tree_delete" required>
+                <option value="" disabled selected>Select Family Tree</option>
+                <th:block th:each="tree : ${trees}">
+                  <option th:value="${tree.id}" th:text="${tree.name}"></option>
+                </th:block>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-danger btn-block">Delete Family Tree</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <div class="row mt-4">
+    <!-- Add Person to Family Tree -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Add Person to Family Tree</h5>
+          <form action="/add-person-to-tree" method="post">
+            <div class="form-group">
+              <label for="tree-select-add">Select Family Tree</label>
+              <select class="form-control" id="tree-select-add" name="tree_id" required>
+                <option value="" disabled selected>Select Family Tree</option>
+                <th:block th:each="tree : ${trees}">
+                  <option th:value="${tree.id}" th:text="${tree.name}"></option>
+                </th:block>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="person-add">Select Person to Add</label>
+              <select class="form-control" id="person-add" name="person_id" required>
+                <option value="" disabled selected>Select Person</option>
+                <th:block th:each="member : ${familyMembers}">
+                  <option th:value="${member.id}" th:text="${member.first_name} + ' ' + ${member.last_name}"></option>
+                </th:block>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-custom btn-block">Add Person</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Remove Person from Family Tree</h5>
+          <form action="/remove-person-from-tree" method="post">
+            <div class="form-group">
+              <label for="tree-select-remove">Select Family Tree</label>
+              <select class="form-control" id="tree-select-remove" name="tree_id" required>
+                <option value="" disabled selected>Select Family Tree</option>
+                <th:block th:each="tree : ${trees}">
+                  <option th:value="${tree.id}" th:text="${tree.name}"></option>
+                </th:block>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="person-remove">Select Person to Remove</label>
+              <select class="form-control" id="person-remove" name="person_id" required>
+                <option value="" disabled selected>Select Person</option>
+                <th:block th:each="member : ${familyMembers}">
+                  <option th:value="${member.id}" th:text="${member.first_name} + ' ' + ${member.last_name}"></option>
+                </th:block>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-danger btn-block">Remove Person</button>
+          </form>
         </div>
       </div>
     </div>
