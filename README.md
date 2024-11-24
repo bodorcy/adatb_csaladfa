@@ -120,8 +120,8 @@ HAVING person_id = ? AND type = 'DIVORCE'
 ```
 
 
-> [megvalósítás: adatb\_csaladfa/csaladfa/src/main/java/com/csaladfa/DAO/EventRepository.java:115](https://github.com/bodorcy/adatb_csaladfa/blob/d39991cab3ff1061a294f8ae8810e2d9a46a3644/csaladfa/src/main/java/com/csaladfa/DAO/EventRepository.java#L115)
-> [megvalósítás: adatb\_csaladfa/csaladfa/src/main/java/com/csaladfa/DAO/EventRepository.java:123](https://github.com/bodorcy/adatb_csaladfa/blob/d39991cab3ff1061a294f8ae8810e2d9a46a3644/csaladfa/src/main/java/com/csaladfa/DAO/EventRepository.java#L123)
+> [megvalósítás: adatb\_csaladfa/csaladfa/src/main/java/com/csaladfa/DAO/EventRepository.java](https://github.com/bodorcy/adatb_csaladfa/blob/d39991cab3ff1061a294f8ae8810e2d9a46a3644/csaladfa/src/main/java/com/csaladfa/DAO/EventRepository.java#L115)
+> [megvalósítás: adatb\_csaladfa/csaladfa/src/main/java/com/csaladfa/DAO/EventRepository.java](https://github.com/bodorcy/adatb_csaladfa/blob/d39991cab3ff1061a294f8ae8810e2d9a46a3644/csaladfa/src/main/java/com/csaladfa/DAO/EventRepository.java#L123)
 
 
 3. A lekérdezés megszámolja, hogy az adott személynek hány gyermeke van (hány személy father\_id/mother\_id -ja egyezik meg az adott személy id-jával). Az, hogy father\_id vagy mother\_id –ra keresünk a kódban van megvalósítva.
@@ -137,7 +137,7 @@ AS parent
 ON person.id = parent.father_id;
 ```
 
-> [megvalósítás: adatb\_csaladfa/csaladfa/src/main/java/com/csaladfa/DAO/PersonRepository.java:176](https://github.com/bodorcy/adatb_csaladfa/blob/d39991cab3ff1061a294f8ae8810e2d9a46a3644/csaladfa/src/main/java/com/csaladfa/DAO/PersonRepository.java#L176)
+> [megvalósítás: adatb\_csaladfa/csaladfa/src/main/java/com/csaladfa/DAO/PersonRepository.java](https://github.com/bodorcy/adatb_csaladfa/blob/d39991cab3ff1061a294f8ae8810e2d9a46a3644/csaladfa/src/main/java/com/csaladfa/DAO/PersonRepository.java#L176)
 
 
 ## Megvalósítás, funkciók
@@ -178,4 +178,5 @@ osztályban kell futtassuk a main függvényt
 ```bash
 java -jar csaladfa-0.0.1-SNAPSHOT.jar
 ```
- 
+
+Mindkét esetben a **localhost:8080** url-en megtekinthetjük a weboldalt.
