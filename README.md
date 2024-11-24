@@ -156,7 +156,7 @@ A felhasználó létrehozhat családfákat amikhez hozzárendelheti az adatbázi
 
 ### Adatbázis:
 
-> az adatbázis és user létrehozásához készítettem egy **setup.sql** filet
+> az adatbázis és user létrehozásához készítettem egy [setup.sql](https://github.com/bodorcy/adatb_csaladfa/blob/main/setup.sql) filet
 
 - szükség van egy sql szerverre a **localhost:3306**-os portján
 
