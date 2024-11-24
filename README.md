@@ -99,7 +99,7 @@ LIMIT 1) d
 ON 1 = 1;
 ```
 
->  [megvalósítás: adatb\_csaladfa/csaladfa/src/main/java/com/csaladfa/DAO/EventRepository.java:137](https://github.com/bodorcy/adatb_csaladfa/blob/d39991cab3ff1061a294f8ae8810e2d9a46a3644/csaladfa/src/main/java/com/csaladfa/DAO/EventRepository.java#L137)
+>  [megvalósítás: adatb\_csaladfa/csaladfa/src/main/java/com/csaladfa/DAO/EventRepository.java](https://github.com/bodorcy/adatb_csaladfa/blob/d39991cab3ff1061a294f8ae8810e2d9a46a3644/csaladfa/src/main/java/com/csaladfa/DAO/EventRepository.java#L137)
 
 
 2. Megszámolja az adott személynek hány házassága, és hány válása volt.
@@ -121,6 +121,7 @@ HAVING person_id = ? AND type = 'DIVORCE'
 
 
 > [megvalósítás: adatb\_csaladfa/csaladfa/src/main/java/com/csaladfa/DAO/EventRepository.java](https://github.com/bodorcy/adatb_csaladfa/blob/d39991cab3ff1061a294f8ae8810e2d9a46a3644/csaladfa/src/main/java/com/csaladfa/DAO/EventRepository.java#L115)
+
 > [megvalósítás: adatb\_csaladfa/csaladfa/src/main/java/com/csaladfa/DAO/EventRepository.java](https://github.com/bodorcy/adatb_csaladfa/blob/d39991cab3ff1061a294f8ae8810e2d9a46a3644/csaladfa/src/main/java/com/csaladfa/DAO/EventRepository.java#L123)
 
 
