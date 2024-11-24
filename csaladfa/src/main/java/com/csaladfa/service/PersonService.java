@@ -31,6 +31,11 @@ public class PersonService {
     public List<Person> getChildren(Integer id){
         return personRepository.getChildren(id);
     }
+    public Long countChildren(Integer id) {
+        Long n =  personRepository.countChildren(id);
+
+        return n == null ? 0 : n;
+    }
     public String deletePerson(Integer id){
         return personRepository.deletePerson(id) == 1 ? "Succesfully deleted person." : "Person not found.";
     }

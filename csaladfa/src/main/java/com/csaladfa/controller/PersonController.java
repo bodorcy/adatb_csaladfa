@@ -51,11 +51,6 @@ public class PersonController {
                                    @RequestParam(required = false) String new_gender,
                                    @RequestParam(required = false) String new_date_of_birth) {
 
-        System.out.println("New father is null" + (new_father == null) + "\n");
-        System.out.println("New mother is null" + (new_mother == null) + "\n");
-        System.out.println("New mother is null" + new_mother + "\n");
-
-
         if (Objects.equals(family_member_id, new_father) || Objects.equals(family_member_id, new_mother)) {
             redirectAttributes.addFlashAttribute("errorMessage", "Person cannot be their own ascendant!");
             return "redirect:/edit";

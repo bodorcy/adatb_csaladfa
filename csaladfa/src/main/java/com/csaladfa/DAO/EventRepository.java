@@ -3,6 +3,7 @@ package com.csaladfa.DAO;
 import com.csaladfa.model.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -107,14 +108,26 @@ public class EventRepository {
         return events;
     }
     public boolean personIsMarried(Integer person_id){
+        Integer marriages;
+        Integer divorces;
+        try {
+            marriages = jdbcTemplate.queryForObject(
+                    "SELECT COUNT(type) FROM event JOIN part_of_event ON event.id = part_of_event.event_id GROUP BY person_id, type HAVING person_id = ? AND type = 'MARRIAGE'",
+                    Integer.class, person_id);
+        }
+        catch (EmptyResultDataAccessException e){
+            marriages = 0;
+        }
+        try{
+            divorces = jdbcTemplate.queryForObject(
+                    "SELECT COUNT(type) FROM event JOIN part_of_event ON event.id = part_of_event.event_id GROUP BY person_id, type HAVING person_id = ? AND type = 'DIVORCE'",
+                    Integer.class, person_id);
+        }
+        catch (EmptyResultDataAccessException e){
+            divorces = 0;
+        }
 
-        Integer marriages = jdbcTemplate.queryForObject(
-                "SELECT COUNT(*) FROM event JOIN part_of_event ON event.id = part_of_event.event_id WHERE person_id = ? AND type = 'MARRIAGE'",
-                Integer.class, person_id);
-
-        Integer divorces = jdbcTemplate.queryForObject(
-                "SELECT COUNT(*) FROM event JOIN part_of_event ON event.id = part_of_event.event_id WHERE person_id = ? AND type = 'DIVORCE'",
-                Integer.class, person_id);
+        System.out.println("Marriages: " + marriages + "Divorces: " + divorces);
 
         if(marriages == 0)
             return false;

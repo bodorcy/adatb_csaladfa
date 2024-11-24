@@ -3,6 +3,7 @@ package com.csaladfa.DAO;
 import com.csaladfa.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -169,9 +170,18 @@ public class PersonRepository {
         return getPeople(rows);
     }
 
-    public int countChildren(Integer id){
-        String sql = "SELECT first_name, last_name, number_of_children FROM person JOIN (SELECT father_id, COUNT(father_id) AS number_of_children FROM person GROUP BY father_id HAVING father_id = 4) AS father ON person.id = father.father_id;";
+    public Long countChildren(Integer id){
+        Person p = getPersonById(id);
+        String fatherOrMother = p.getGender().equals("m") ? "father_id" : "mother_id";
+        String sql = "SELECT number_of_children FROM person JOIN (SELECT " + fatherOrMother + ", COUNT(" + fatherOrMother + ") AS number_of_children FROM person GROUP BY " + fatherOrMother + " HAVING " + fatherOrMother + " = ?) AS parent ON person.id = parent." + fatherOrMother;
+        System.out.println(sql);
+        try{
+            Map<String, Object> row = jdbcTemplate.queryForMap(sql, id);
 
-        return 0;
+            return (Long) row.get("number_of_children");
+        }
+        catch (EmptyResultDataAccessException e){
+            return 0L;
+        }
     }
 }

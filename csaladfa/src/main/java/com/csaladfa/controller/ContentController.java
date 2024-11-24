@@ -51,6 +51,7 @@ public class ContentController {
             model.addAttribute("parents", personService.getParents(id));
             model.addAttribute("children", personService.getChildren(id));
             model.addAttribute("events", eventService.listPersonsEvents(id));
+            model.addAttribute("number_of_children", personService.countChildren(id));
         } else {
             // Add default empty attributes for initial load
             model.addAttribute("person", null);
