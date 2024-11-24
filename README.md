@@ -4,7 +4,7 @@ Az alkalmazás regisztrációt követően lehetővé teszi, hogy a felhasználó
 
 ## Egyed-kapcsolat modell
 
-![](csaladfa_ek.jpg)
+![](csaladfa_EK.jpg)
 
 A Személy entitásnak 2 rekurzív kapcsolata van, Anyja és Apja melyek 1:N típusúak, mivel egy személynek csak egy anyja/apja van, de egy személynek lehet több gyermeke is. Az Eseményt és a Személyt az Esemény része N:N-hez típusú kapcsolat köti össze, mivel egy személynek több eseménye is van, és egy eseményhez több személy is tartozhat (pl. esküvő). A Családfa és Személy egyed között szintén N:N típusú kapcsolat fedezhető fel, mivel egy személy több családhoz is tartozhat, és egy családfa nyilván több személyhez tartozik.
 
