@@ -28,7 +28,7 @@ CREATE TABLE `event` (
   `date` date DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `event` (
 
 LOCK TABLES `event` WRITE;
 /*!40000 ALTER TABLE `event` DISABLE KEYS */;
-INSERT INTO `event` VALUES (20,'MARRIAGE','2024-11-12','Marrige of Dave and Sandra'),(21,'BIRTH','1985-06-15','John Doe\'s Birth'),(22,'BIRTH','1987-02-20','Jane Doe\'s Birth'),(23,'BIRTH','1990-03-25','Mary Johnson\'s Birth'),(24,'BIRTH','1991-11-11','James Johnson\'s Birth'),(25,'BIRTH','1983-08-30','Robert Smith\'s Birth'),(26,'BIRTH','1994-09-22','Emily Smith\'s Birth'),(27,'BIRTH','1992-04-16','William Brown\'s Birth'),(28,'BIRTH','1985-01-30','Linda Brown\'s Birth'),(29,'BIRTH','1981-10-05','Michael Davis\'s Birth'),(30,'BIRTH','1993-12-12','Elizabeth Davis\'s Birth'),(31,'BIRTH','1995-07-18','David Miller\'s Birth'),(32,'BIRTH','1988-01-13','Sophia Miller\'s Birth'),(33,'BIRTH','1986-09-09','Joseph Wilson\'s Birth'),(34,'BIRTH','1992-11-01','Grace Wilson\'s Birth'),(35,'BIRTH','1994-03-04','Daniel Moore\'s Birth'),(36,'BIRTH','1990-06-20','Olivia Moore\'s Birth'),(37,'BIRTH','1989-12-30','Charles Taylor\'s Birth'),(38,'BIRTH','1993-07-12','Charlotte Taylor\'s Birth'),(39,'BIRTH','1991-05-02','Christopher Anderson\'s Birth'),(40,'BIRTH','1987-10-18','Amelia Anderson\'s Birth'),(41,'MARRIAGE','2015-05-10','John Doe and Jane Doe Marriage'),(42,'MARRIAGE','2020-07-22','Robert Smith and Emily Smith Marriage'),(43,'MARRIAGE','2023-04-14','Michael Davis and Elizabeth Davis Marriage'),(44,'DIVORCE','2022-06-30','John Doe and Jane Doe Divorce'),(45,'DIVORCE','2024-01-11','Robert Smith and Emily Smith Divorce'),(46,'DEATH','2060-02-28','John Doe\'s Death'),(47,'DEATH','2080-03-15','Jane Doe\'s Death'),(48,'DEATH','2075-07-09','Robert Smith\'s Death'),(49,'DEATH','2090-09-10','Emily Smith\'s Death'),(50,'BIRTH','1985-06-15','John Doe\'s Birth'),(51,'BIRTH','1987-02-20','Jane Doe\'s Birth'),(52,'BIRTH','1990-03-25','Mary Johnson\'s Birth'),(53,'BIRTH','1991-11-11','James Johnson\'s Birth'),(54,'BIRTH','1983-08-30','Robert Smith\'s Birth'),(55,'BIRTH','1994-09-22','Emily Smith\'s Birth'),(56,'BIRTH','1992-04-16','William Brown\'s Birth'),(57,'BIRTH','1985-01-30','Linda Brown\'s Birth'),(58,'BIRTH','1981-10-05','Michael Davis\'s Birth'),(59,'BIRTH','1993-12-12','Elizabeth Davis\'s Birth'),(60,'BIRTH','1995-07-18','David Miller\'s Birth'),(61,'BIRTH','1988-01-13','Sophia Miller\'s Birth'),(62,'BIRTH','1986-09-09','Joseph Wilson\'s Birth'),(63,'BIRTH','1992-11-01','Grace Wilson\'s Birth'),(64,'BIRTH','1994-03-04','Daniel Moore\'s Birth'),(65,'BIRTH','1990-06-20','Olivia Moore\'s Birth'),(66,'BIRTH','1989-12-30','Charles Taylor\'s Birth'),(67,'BIRTH','1993-07-12','Charlotte Taylor\'s Birth'),(68,'BIRTH','1991-05-02','Christopher Anderson\'s Birth'),(69,'BIRTH','1987-10-18','Amelia Anderson\'s Birth'),(70,'MARRIAGE','2015-05-10','John Doe and Jane Doe Marriage'),(71,'MARRIAGE','2020-07-22','Robert Smith and Emily Smith Marriage'),(72,'MARRIAGE','2023-04-14','Michael Davis and Elizabeth Davis Marriage'),(73,'DIVORCE','2022-06-30','John Doe and Jane Doe Divorce'),(74,'DIVORCE','2024-01-11','Robert Smith and Emily Smith Divorce'),(75,'DEATH','2060-02-28','John Doe\'s Death'),(76,'DEATH','2080-03-15','Jane Doe\'s Death'),(77,'DEATH','2075-07-09','Robert Smith\'s Death'),(78,'DEATH','2090-09-10','Emily Smith\'s Death');
+INSERT INTO `event` VALUES (16,'MARRIAGE','2024-11-04','Nándi házasodik'),(17,'MARRIAGE','2024-11-05','Nándi házasodik'),(18,'MARRIAGE','2024-11-30','másik házassága Nándinak'),(19,'DIVORCE','2024-11-10','Nándi válás'),(20,'MARRIAGE','2024-11-12','Marrige of Dave and Sandra'),(21,'BIRTH','1985-06-15','John Doe\'s Birth'),(22,'BIRTH','1987-02-20','Jane Doe\'s Birth'),(23,'BIRTH','1990-03-25','Mary Johnson\'s Birth'),(24,'BIRTH','1991-11-11','James Johnson\'s Birth'),(25,'BIRTH','1983-08-30','Robert Smith\'s Birth'),(26,'BIRTH','1994-09-22','Emily Smith\'s Birth'),(27,'BIRTH','1992-04-16','William Brown\'s Birth'),(28,'BIRTH','1985-01-30','Linda Brown\'s Birth'),(29,'BIRTH','1981-10-05','Michael Davis\'s Birth'),(30,'BIRTH','1993-12-12','Elizabeth Davis\'s Birth'),(31,'BIRTH','1995-07-18','David Miller\'s Birth'),(32,'BIRTH','1988-01-13','Sophia Miller\'s Birth'),(33,'BIRTH','1986-09-09','Joseph Wilson\'s Birth'),(34,'BIRTH','1992-11-01','Grace Wilson\'s Birth'),(35,'BIRTH','1994-03-04','Daniel Moore\'s Birth'),(36,'BIRTH','1990-06-20','Olivia Moore\'s Birth'),(37,'BIRTH','1989-12-30','Charles Taylor\'s Birth'),(38,'BIRTH','1993-07-12','Charlotte Taylor\'s Birth'),(39,'BIRTH','1991-05-02','Christopher Anderson\'s Birth'),(40,'BIRTH','1987-10-18','Amelia Anderson\'s Birth'),(41,'MARRIAGE','2015-05-10','John Doe and Jane Doe Marriage'),(42,'MARRIAGE','2020-07-22','Robert Smith and Emily Smith Marriage'),(43,'MARRIAGE','2023-04-14','Michael Davis and Elizabeth Davis Marriage'),(44,'DIVORCE','2022-06-30','John Doe and Jane Doe Divorce'),(45,'DIVORCE','2024-01-11','Robert Smith and Emily Smith Divorce'),(46,'DEATH','2060-02-28','John Doe\'s Death'),(47,'DEATH','2080-03-15','Jane Doe\'s Death'),(48,'DEATH','2075-07-09','Robert Smith\'s Death'),(49,'DEATH','2090-09-10','Emily Smith\'s Death'),(50,'BIRTH','1985-06-15','John Doe\'s Birth'),(51,'BIRTH','1987-02-20','Jane Doe\'s Birth'),(52,'BIRTH','1990-03-25','Mary Johnson\'s Birth'),(53,'BIRTH','1991-11-11','James Johnson\'s Birth'),(54,'BIRTH','1983-08-30','Robert Smith\'s Birth'),(55,'BIRTH','1994-09-22','Emily Smith\'s Birth'),(56,'BIRTH','1992-04-16','William Brown\'s Birth'),(57,'BIRTH','1985-01-30','Linda Brown\'s Birth'),(58,'BIRTH','1981-10-05','Michael Davis\'s Birth'),(59,'BIRTH','1993-12-12','Elizabeth Davis\'s Birth'),(60,'BIRTH','1995-07-18','David Miller\'s Birth'),(61,'BIRTH','1988-01-13','Sophia Miller\'s Birth'),(62,'BIRTH','1986-09-09','Joseph Wilson\'s Birth'),(63,'BIRTH','1992-11-01','Grace Wilson\'s Birth'),(64,'BIRTH','1994-03-04','Daniel Moore\'s Birth'),(65,'BIRTH','1990-06-20','Olivia Moore\'s Birth'),(66,'BIRTH','1989-12-30','Charles Taylor\'s Birth'),(67,'BIRTH','1993-07-12','Charlotte Taylor\'s Birth'),(68,'BIRTH','1991-05-02','Christopher Anderson\'s Birth'),(69,'BIRTH','1987-10-18','Amelia Anderson\'s Birth'),(70,'MARRIAGE','2015-05-10','John Doe and Jane Doe Marriage'),(71,'MARRIAGE','2020-07-22','Robert Smith and Emily Smith Marriage'),(72,'MARRIAGE','2023-04-14','Michael Davis and Elizabeth Davis Marriage'),(73,'DIVORCE','2022-06-30','John Doe and Jane Doe Divorce'),(74,'DIVORCE','2024-01-11','Robert Smith and Emily Smith Divorce'),(75,'DEATH','2060-02-28','John Doe\'s Death'),(76,'DEATH','2080-03-15','Jane Doe\'s Death'),(77,'DEATH','2075-07-09','Robert Smith\'s Death'),(78,'DEATH','2090-09-10','Emily Smith\'s Death'),(79,'MARRIAGE','2024-11-13','Nándi házasság'),(80,'DIVORCE','2024-12-01','Nándi válása'),(81,'MARRIAGE','2024-12-02','Nándi 2. házassága');
 /*!40000 ALTER TABLE `event` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -52,7 +52,7 @@ CREATE TABLE `family_tree` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -61,7 +61,7 @@ CREATE TABLE `family_tree` (
 
 LOCK TABLES `family_tree` WRITE;
 /*!40000 ALTER TABLE `family_tree` DISABLE KEYS */;
-INSERT INTO `family_tree` VALUES (4,'Csf 2'),(5,'Csf 3');
+INSERT INTO `family_tree` VALUES (5,'Csf 3'),(6,'Családfa 1');
 /*!40000 ALTER TABLE `family_tree` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -89,7 +89,7 @@ CREATE TABLE `part_of_event` (
 
 LOCK TABLES `part_of_event` WRITE;
 /*!40000 ALTER TABLE `part_of_event` DISABLE KEYS */;
-INSERT INTO `part_of_event` VALUES (21,16,'Self'),(22,17,'Self'),(23,18,'Self'),(24,19,'Self'),(25,20,'Self'),(26,21,'Self'),(27,22,'Self'),(28,23,'Self'),(29,24,'Self'),(30,25,'Self'),(31,26,'Self'),(32,27,'Self'),(33,28,'Self'),(34,29,'Self'),(35,30,'Self'),(36,31,'Self'),(37,32,'Self'),(38,33,'Self'),(39,34,'Self'),(40,35,'Self'),(41,16,'Spouse'),(41,17,'Spouse'),(42,20,'Spouse'),(42,21,'Spouse'),(43,24,'Spouse'),(43,25,'Spouse'),(44,16,'Ex-Spouse'),(44,17,'Ex-Spouse'),(45,20,'Ex-Spouse'),(45,21,'Ex-Spouse'),(46,16,'Deceased'),(47,17,'Deceased'),(48,20,'Deceased'),(49,21,'Deceased');
+INSERT INTO `part_of_event` VALUES (16,37,NULL),(21,16,'Self'),(22,17,'Self'),(23,18,'Self'),(24,19,'Self'),(25,20,'Self'),(26,21,'Self'),(27,22,'Self'),(28,23,'Self'),(29,24,'Self'),(30,25,'Self'),(31,26,'Self'),(32,27,'Self'),(33,28,'Self'),(34,29,'Self'),(35,30,'Self'),(36,31,'Self'),(37,32,'Self'),(38,33,'Self'),(39,34,'Self'),(40,35,'Self'),(41,16,'Spouse'),(41,17,'Spouse'),(42,20,'Spouse'),(42,21,'Spouse'),(43,24,'Spouse'),(43,25,'Spouse'),(44,16,'Ex-Spouse'),(44,17,'Ex-Spouse'),(45,20,'Ex-Spouse'),(45,21,'Ex-Spouse'),(46,16,'Deceased'),(47,17,'Deceased'),(48,20,'Deceased'),(49,21,'Deceased'),(79,17,NULL),(79,36,NULL),(80,36,NULL),(81,36,NULL);
 /*!40000 ALTER TABLE `part_of_event` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -139,7 +139,7 @@ CREATE TABLE `person` (
   KEY `father_id` (`father_id`),
   CONSTRAINT `person_ibfk_1` FOREIGN KEY (`mother_id`) REFERENCES `person` (`id`) ON DELETE SET NULL,
   CONSTRAINT `person_ibfk_2` FOREIGN KEY (`father_id`) REFERENCES `person` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -148,7 +148,7 @@ CREATE TABLE `person` (
 
 LOCK TABLES `person` WRITE;
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
-INSERT INTO `person` VALUES (16,NULL,NULL,'John','Doe','m','1985-06-15'),(17,NULL,NULL,'Jane','Doe','f','1987-02-20'),(18,NULL,NULL,'Mary','Johnson','f','1990-03-25'),(19,NULL,NULL,'James','Johnson','m','1991-11-11'),(20,18,17,'Robert','Smith','m','1983-08-30'),(21,18,17,'Emily','Smith','f','1994-09-22'),(22,24,23,'William','Brown','m','1992-04-16'),(23,24,23,'Linda','Brown','f','1985-01-30'),(24,22,21,'Michael','Davis','m','1981-10-05'),(25,22,21,'Elizabeth','Davis','f','1993-12-12'),(26,12,14,'David','Miller','m','1995-07-18'),(27,12,14,'Sophia','Miller','f','1988-01-13'),(28,22,24,'Joseph','Wilson','m','1986-09-09'),(29,22,24,'Grace','Wilson','f','1992-11-01'),(30,20,21,'Daniel','Moore','m','1994-03-04'),(31,20,21,'Olivia','Moore','f','1990-06-20'),(32,34,35,'Charles','Taylor','m','1989-12-30'),(33,34,35,'Charlotte','Taylor','f','1993-07-12'),(34,NULL,NULL,'Christopher','Anderson','m','1991-05-02'),(35,NULL,NULL,'Amelia','Anderson','f','1987-10-18');
+INSERT INTO `person` VALUES (12,14,NULL,'Ádám','Monostori','m','2024-11-30'),(14,NULL,NULL,'Hilda','Hegedüs','f','1964-06-24'),(16,NULL,NULL,'John','Doe','m','1985-06-15'),(17,NULL,NULL,'Jane','Doe','f','1987-02-20'),(18,NULL,NULL,'Mary','Johnson','f','1990-03-25'),(19,NULL,NULL,'James','Johnson','m','1991-11-11'),(20,18,17,'Robert','Smith','m','1983-08-30'),(21,18,17,'Emily','Smith','f','1994-09-22'),(22,24,23,'William','Brown','m','1992-04-16'),(23,24,23,'Linda','Brown','f','1985-01-30'),(24,22,21,'Michael','Davis','m','1981-10-05'),(25,22,21,'Elizabeth','Davis','f','1993-12-12'),(26,12,14,'David','Miller','m','1995-07-18'),(27,12,14,'Sophia','Miller','f','1988-01-13'),(28,22,24,'Joseph','Wilson','m','1986-09-09'),(29,22,24,'Grace','Wilson','f','1992-11-01'),(30,20,21,'Daniel','Moore','m','1994-03-04'),(31,20,21,'Olivia','Moore','f','1990-06-20'),(32,34,35,'Charles','Taylor','m','1989-12-30'),(33,34,35,'Charlotte','Taylor','f','1993-07-12'),(34,NULL,NULL,'Christopher','Anderson','m','1991-05-02'),(35,NULL,NULL,'Amelia','Anderson','f','1987-10-18'),(36,14,12,'Nándor','Vincze','m','2024-11-24'),(37,NULL,NULL,'Nem','Házas','f','2024-11-01');
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,4 +186,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-24  1:56:38
+-- Dump completed on 2024-11-24 20:09:35
