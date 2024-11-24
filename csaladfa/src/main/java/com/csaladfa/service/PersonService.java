@@ -34,4 +34,7 @@ public class PersonService {
     public String deletePerson(Integer id){
         return personRepository.deletePerson(id) == 1 ? "Succesfully deleted person." : "Person not found.";
     }
+    public String updatePersonById(Integer id, Person person){
+        return personRepository.updatePersonById(id, person);
+    }
 }

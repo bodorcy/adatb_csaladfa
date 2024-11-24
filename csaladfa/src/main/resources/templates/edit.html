@@ -63,6 +63,15 @@
       border-radius: 5px;
       font-weight: bold;
     }
+    .alert-error {
+      display: block;
+      background-color: tomato;
+      color: #155724;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -70,6 +79,9 @@
 <!-- Navigation Bar -->
 <div th:if="${successMessage != null}" class="alert alert-success">
   <span th:text="${successMessage}"></span>
+</div>
+<div th:if="${errorMessage != null}" class="alert alert-error">
+  <span th:text="${errorMessage}"></span>
 </div>
 <nav class="navbar navbar-expand-lg navbar-dark">
   <a class="navbar-brand" href="/">Family Tree</a>
@@ -252,6 +264,66 @@
               </select>
             </div>
             <button type="submit" class="btn btn-danger btn-block">Delete Family Member</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-6">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Edit Family Member</h5>
+          <form action="/edit-family-member" method="post">
+            <div class="form-group">
+              <label for="family-member-edit">Select Family Member to Edit</label>
+              <select class="form-control" id="family-member-edit" name="family_member_id" required>
+                <option value="" disabled selected>Select Family Member</option>
+                <th:block th:each="member : ${familyMembers}">
+                  <option th:value="${member.id}" th:text="${member.first_name} + ' ' + ${member.last_name} + ' ' + ${member.date_of_birth}"></option>
+                </th:block>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="new-father">New Father (Optional)</label>
+              <select class="form-control" id="new-father" name="new_father">
+                <option value="" disabled selected>Select Family Member</option>
+                <th:block th:each="member : ${familyMembers}">
+                  <option th:value="${member.id}" th:text="${member.first_name} + ' ' + ${member.last_name} + ' ' + ${member.date_of_birth}"></option>
+                </th:block>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="new-mother">New Mother (Optional)</label>
+              <select class="form-control" id="new-mother" name="new_mother">
+                <option value="" disabled selected>Select Family Member</option>
+                <th:block th:each="member : ${familyMembers}">
+                  <option th:value="${member.id}" th:text="${member.first_name} + ' ' + ${member.last_name} + ' ' + ${member.date_of_birth}"></option>
+                </th:block>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="new-first-name">New First Name (Optional)</label>
+              <input type="text" class="form-control" id="new-first-name" name="new_first_name" placeholder="Enter new first name">
+            </div>
+            <div class="form-group">
+              <label for="new-last-name">New Last Name (Optional)</label>
+              <input type="text" class="form-control" id="new-last-name" name="new_last_name" placeholder="Enter new last name">
+            </div>
+            <div class="form-group">
+              <label for="new-gender">New Gender (Optional)</label>
+              <select class="form-control" id="new-gender" name="new_gender">
+                <option value="" selected>Keep current gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="new-date-of-birth">New Date of Birth (Optional)</label>
+              <input type="date" class="form-control" id="new-date-of-birth" name="new_date_of_birth">
+            </div>
+            <button type="submit" class="btn btn-custom btn-block">Edit Family Member</button>
           </form>
         </div>
       </div>

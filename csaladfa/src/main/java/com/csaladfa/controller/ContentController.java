@@ -58,7 +58,6 @@ public class ContentController {
             model.addAttribute("children", null);
             model.addAttribute("events", null);
         }
-
         return "index"; // Render the index.html template
     }
 
@@ -72,7 +71,8 @@ public class ContentController {
     public String famly_tree(){
         return "edit";
     }
-
+    @GetMapping("/edit-family-member")
+    public String edit_family_member() { return "edit"; }
     @GetMapping("/delete-event")
     public String delet_event(){
         return "edit";

@@ -6,7 +6,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,22 +40,55 @@ public class PersonRepository {
 
     public String createPerson(Person person){
         if (personAlreadyExists(person))
-           return "Person already added to family tree!";
+           return "Person already exists!";
 
         String sql = "INSERT INTO person (mother_id, father_id, first_name, last_name, gender, date_of_birth) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             int rowsAffected = jdbcTemplate.update(sql, person.getMother_id(), person.getFather_id(), person.getFirst_name(), person.getLast_name(), person.getGender(), person.getDate_of_birth().toString());
 
             if(rowsAffected > 0)
-                return "Person added to family tree!";
+                return "Person created!";
             else
-                return "Person could not be added to family tree.";
+                return "Person could not be created.";
 
         }
         catch (DataIntegrityViolationException e) {
             return "Database error: " + e.toString();
         }
     }
+    public String updatePersonById(int id, Person person) {
+        // Check if the person with the given id exists
+        String checkSql = "SELECT COUNT(*) FROM person WHERE id = ?";
+        int count = jdbcTemplate.queryForObject(checkSql, Integer.class, id);
+
+        if (count == 0) {
+            return "Person with the given ID does not exist!";
+        }
+
+        // Update the person record
+        String updateSql = "UPDATE person SET mother_id = ?, father_id = ?, first_name = ?, last_name = ?, gender = ?, date_of_birth = ? WHERE id = ?";
+        try {
+            int rowsAffected = jdbcTemplate.update(
+                    updateSql,
+                    person.getMother_id(),
+                    person.getFather_id(),
+                    person.getFirst_name(),
+                    person.getLast_name(),
+                    person.getGender(),
+                    person.getDate_of_birth().toString(),
+                    id
+            );
+
+            if (rowsAffected > 0) {
+                return "Person updated successfully!";
+            } else {
+                return "Person could not be updated.";
+            }
+        } catch (DataIntegrityViolationException e) {
+            return "Database error: " + e.toString();
+        }
+    }
+
     public int deletePerson(Integer id){
         String sql = "DELETE FROM person WHERE id = ?";
 
@@ -77,6 +109,40 @@ public class PersonRepository {
 
         return person;
     }
+
+    public String updatePersonById(Integer id, Person person) {
+        // Check if the person with the given id exists
+        String checkSql = "SELECT COUNT(*) FROM person WHERE id = ?";
+        int count = jdbcTemplate.queryForObject(checkSql, Integer.class, id);
+
+        if (count == 0) {
+            return "Person with the given ID does not exist!";
+        }
+
+        // Update the person record
+        String updateSql = "UPDATE person SET mother_id = ?, father_id = ?, first_name = ?, last_name = ?, gender = ?, date_of_birth = ? WHERE id = ?";
+        try {
+            int rowsAffected = jdbcTemplate.update(
+                    updateSql,
+                    person.getMother_id(),
+                    person.getFather_id(),
+                    person.getFirst_name(),
+                    person.getLast_name(),
+                    person.getGender(),
+                    person.getDate_of_birth().toString(),
+                    id
+            );
+
+            if (rowsAffected > 0) {
+                return "Person updated successfully!";
+            } else {
+                return "Person could not be updated.";
+            }
+        } catch (DataIntegrityViolationException e) {
+            return "Database error: " + e.toString();
+        }
+    }
+
 
     public List<Person> listPeople(){
         String sql = "SELECT * FROM person";

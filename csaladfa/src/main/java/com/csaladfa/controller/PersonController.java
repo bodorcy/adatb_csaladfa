@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Objects;
+
 @Controller
 public class PersonController {
     @Autowired
@@ -39,6 +41,48 @@ public class PersonController {
 
         return "redirect:/edit";
     }
+    @PostMapping("/edit-family-member")
+    public String editFamilyMember(RedirectAttributes redirectAttributes,
+                                   @RequestParam Integer family_member_id,
+                                   @RequestParam(required = false) Integer new_father,
+                                   @RequestParam(required = false) Integer new_mother,
+                                   @RequestParam(required = false) String new_first_name,
+                                   @RequestParam(required = false) String new_last_name,
+                                   @RequestParam(required = false) String new_gender,
+                                   @RequestParam(required = false) String new_date_of_birth) {
+
+        System.out.println("New father is null" + (new_father == null) + "\n");
+        System.out.println("New mother is null" + (new_mother == null) + "\n");
+        System.out.println("New mother is null" + new_mother + "\n");
+
+
+        if (Objects.equals(family_member_id, new_father) || Objects.equals(family_member_id, new_mother)) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Person cannot be their own ascendant!");
+            return "redirect:/edit";
+        }
+
+        Person existingPerson = personService.getPersonById(family_member_id);
+        if (existingPerson == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Person with the given ID does not exist!");
+            return "redirect:/edit";
+        }
+
+        // Update fields only if new values are provided
+        existingPerson.setFather_id(new_father != null ? new_father : (existingPerson.getFather_id() != null ? existingPerson.getFather_id() : null));
+        existingPerson.setMother_id(new_mother != null ? new_mother : (existingPerson.getMother_id() != null ? existingPerson.getMother_id() : null));
+        existingPerson.setFirst_name(!new_first_name.equals("") ? new_first_name : existingPerson.getFirst_name());
+        existingPerson.setLast_name(!new_last_name.equals("") ? new_last_name : existingPerson.getLast_name());
+        existingPerson.setGender(!new_gender.equals("") ? String.valueOf(new_gender.charAt(0)) : existingPerson.getGender());
+        existingPerson.setDate_of_birth(!new_date_of_birth.equals("") ? new_date_of_birth : existingPerson.getDate_of_birth().toString());
+        // Call the service to update the person
+        String resultMessage = personService.updatePersonById(family_member_id, existingPerson);
+
+        // Flash success or error message based on result
+        redirectAttributes.addFlashAttribute("successMessage", resultMessage);
+
+        return "redirect:/edit";
+    }
+
     @PostMapping("/delete-family-member")
     public String deleteFamilyMember(@RequestParam("family-member-delete") int familyMemberId, RedirectAttributes redirectAttributes) {
 

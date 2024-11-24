@@ -29,9 +29,15 @@ public class Person {
     private LocalDate date_of_birth;
 
     public void setDate_of_birth(String dob){
+        if(dob == null || dob.equals(""))
+            return;
         date_of_birth = LocalDate.parse(dob);
     }
     public void setDate_of_birth(Date dob) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        setDate_of_birth(sdf.format(dob));
+    }
+    public void setDate_of_birth(LocalDate dob) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         setDate_of_birth(sdf.format(dob));
     }
