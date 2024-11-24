@@ -24,12 +24,11 @@ public class AuthController {
     public String login(@RequestParam String username, @RequestParam String password, Model model) {
         User user = userRepository.findUserByUsername(username).orElse(null);
         if (user != null && passwordEncoder.matches(password, user.getPassword())) {
-            // You can add a session attribute or redirect to another page
             model.addAttribute("message", "Login successful!");
-            return "index"; // Redirect to a homepage or dashboard
+            return "index";
         } else {
             model.addAttribute("message", "Invalid username or password.");
-            return "login"; // Return to login page
+            return "login";
         }
     }
     @PostMapping("/register")

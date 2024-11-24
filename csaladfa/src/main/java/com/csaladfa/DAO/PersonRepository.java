@@ -58,7 +58,6 @@ public class PersonRepository {
         }
     }
     public String updatePersonById(int id, Person person) {
-        // Check if the person with the given id exists
         String checkSql = "SELECT COUNT(*) FROM person WHERE id = ?";
         int count = jdbcTemplate.queryForObject(checkSql, Integer.class, id);
 
@@ -66,7 +65,6 @@ public class PersonRepository {
             return "Person with the given ID does not exist!";
         }
 
-        // Update the person record
         String updateSql = "UPDATE person SET mother_id = ?, father_id = ?, first_name = ?, last_name = ?, gender = ?, date_of_birth = ? WHERE id = ?";
         try {
             int rowsAffected = jdbcTemplate.update(
@@ -112,15 +110,12 @@ public class PersonRepository {
     }
 
     public String updatePersonById(Integer id, Person person) {
-        // Check if the person with the given id exists
         String checkSql = "SELECT COUNT(*) FROM person WHERE id = ?";
         int count = jdbcTemplate.queryForObject(checkSql, Integer.class, id);
 
         if (count == 0) {
             return "Person with the given ID does not exist!";
         }
-
-        // Update the person record
         String updateSql = "UPDATE person SET mother_id = ?, father_id = ?, first_name = ?, last_name = ?, gender = ?, date_of_birth = ? WHERE id = ?";
         try {
             int rowsAffected = jdbcTemplate.update(

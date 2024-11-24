@@ -69,10 +69,9 @@ public class PersonController {
         existingPerson.setLast_name(!new_last_name.equals("") ? new_last_name : existingPerson.getLast_name());
         existingPerson.setGender(!new_gender.equals("") ? String.valueOf(new_gender.charAt(0)) : existingPerson.getGender());
         existingPerson.setDate_of_birth(!new_date_of_birth.equals("") ? new_date_of_birth : existingPerson.getDate_of_birth().toString());
-        // Call the service to update the person
+
         String resultMessage = personService.updatePersonById(family_member_id, existingPerson);
 
-        // Flash success or error message based on result
         redirectAttributes.addFlashAttribute("successMessage", resultMessage);
 
         return "redirect:/edit";

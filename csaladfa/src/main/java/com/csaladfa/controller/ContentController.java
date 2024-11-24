@@ -59,7 +59,7 @@ public class ContentController {
             model.addAttribute("children", null);
             model.addAttribute("events", null);
         }
-        return "index"; // Render the index.html template
+        return "index";
     }
 
     @GetMapping("/family-tree")

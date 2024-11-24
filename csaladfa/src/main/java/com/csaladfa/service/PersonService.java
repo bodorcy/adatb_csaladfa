@@ -2,7 +2,6 @@ package com.csaladfa.service;
 
 import com.csaladfa.DAO.PersonRepository;
 import com.csaladfa.model.Person;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
