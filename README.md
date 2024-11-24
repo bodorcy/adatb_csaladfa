@@ -171,7 +171,7 @@ A felhasználó létrehozhat családfákat amikhez hozzárendelheti az adatbázi
   [*(csaladfa/src/main/resources/application.properties:4-5)*](https://github.com/bodorcy/adatb_csaladfa/blob/d39991cab3ff1061a294f8ae8810e2d9a46a3644/csaladfa/src/main/resources/application.properties#L4)
 
 ### Java:
-- **IntelliJ Idea**-ban az adatb_csaladfa/csaladfa/src/main/java/com/CsaladfaApplication.java
+- **IntelliJ Idea**-ban az [adatb_csaladfa/csaladfa/src/main/java/com/CsaladfaApplication.java](https://github.com/bodorcy/adatb_csaladfa/blob/main/csaladfa/src/main/java/com/csaladfa/CsaladfaApplication.java)
 osztályban kell futtassuk a main függvényt
 
 - **Terminálban** a *csaladfa-0.0.x-SNAPSHOT.jar* file futtatásával indíthatjuk el az alkalmazást:
