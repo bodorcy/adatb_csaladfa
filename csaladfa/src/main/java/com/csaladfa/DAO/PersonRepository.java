@@ -88,27 +88,41 @@ public class PersonRepository {
         } catch (DataIntegrityViolationException e) {
             return "Database error: " + e.toString();
         }
+        catch (Exception e) {
+            return "Error: " + e.toString();
+        }
     }
 
     public int deletePerson(Integer id){
         String sql = "DELETE FROM person WHERE id = ?";
-
-        return jdbcTemplate.update(sql, id);
+        try{
+            return jdbcTemplate.update(sql, id);
+        }
+        catch (Exception e) {
+            System.out.println( "Error: " + e.toString());
+            return 0;
+        }
     }
     public Person getPersonById(Integer id){
         String sql = "SELECT * FROM person WHERE id = ?";
         Map<String, Object> row = jdbcTemplate.queryForMap(sql, id);
+        try{
+            Person person = new Person();
+            person.setId((Integer) row.get("id"));
+            person.setFirst_name((String) row.get("first_name"));
+            person.setLast_name((String) row.get("last_name"));
+            person.setGender((String) row.get("gender"));
+            person.setDate_of_birth((Date) row.get("date_of_birth"));
+            person.setMother_id((Integer) row.get("mother_id"));
+            person.setFather_id((Integer) row.get("father_id"));
 
-        Person person = new Person();
-        person.setId((Integer) row.get("id"));
-        person.setFirst_name((String) row.get("first_name"));
-        person.setLast_name((String) row.get("last_name"));
-        person.setGender((String) row.get("gender"));
-        person.setDate_of_birth((Date) row.get("date_of_birth"));
-        person.setMother_id((Integer) row.get("mother_id"));
-        person.setFather_id((Integer) row.get("father_id"));
+            return person;
+        }
+        catch (Exception e) {
+            System.out.println( "Error: " + e.toString());
+            return new Person();
+        }
 
-        return person;
     }
 
     public String updatePersonById(Integer id, Person person) {
@@ -138,6 +152,9 @@ public class PersonRepository {
             }
         } catch (DataIntegrityViolationException e) {
             return "Database error: " + e.toString();
+        }
+        catch (Exception e) {
+            return "Error: " + e.toString();
         }
     }
 
@@ -178,6 +195,10 @@ public class PersonRepository {
             return (Long) row.get("number_of_children");
         }
         catch (EmptyResultDataAccessException e){
+            return 0L;
+        }
+        catch (Exception e) {
+            System.out.println("Error: " + e.toString());
             return 0L;
         }
     }

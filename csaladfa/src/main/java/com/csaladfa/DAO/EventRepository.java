@@ -48,6 +48,9 @@ public class EventRepository {
         catch (DataIntegrityViolationException e) {
             return "Database error: " + e.toString();
         }
+        catch (Exception e) {
+            return "Error: " + e.toString();
+        }
     }
     public String addPersonToEvent(Integer person_id, Integer event_id){
         if(personAlreadyInEvent(person_id, event_id))
@@ -66,6 +69,9 @@ public class EventRepository {
         catch(DataIntegrityViolationException e){
             return "Database error: " + e.toString();
         }
+        catch (Exception e) {
+            return "Error: " + e.toString();
+        }
     }
     public int deleteEvent(Integer id){
         String sql = "DELETE FROM event WHERE id = ?";
@@ -73,39 +79,50 @@ public class EventRepository {
     }
     public List<Event> listEvents(){
         String sql = "SELECT * FROM event";
+        try{
+            List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+            List<Event> events = new ArrayList<>();
 
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
-        List<Event> events = new ArrayList<>();
+            for (Map<String, Object> row : rows){
+                Event e = new Event();
+                e.setId((Integer) row.get("id"));
+                e.setDate((Date) row.get("date"));
+                e.setType((String) row.get("type"));
+                e.setName((String) row.get("name"));
 
-        for (Map<String, Object> row : rows){
-            Event e = new Event();
-            e.setId((Integer) row.get("id"));
-            e.setDate((Date) row.get("date"));
-            e.setType((String) row.get("type"));
-            e.setName((String) row.get("name"));
+                events.add(e);
+            }
 
-            events.add(e);
+            return events;
         }
-
-        return events;
+        catch (Exception e) {
+            System.out.println("Error: " + e.toString());
+            return new ArrayList<>();
+        }
     }
     public List<Event> listEventsOfPerson(Integer person_id){
         String sql = "SELECT * FROM event WHERE id IN (SELECT event_id FROM part_of_event WHERE person_id = ?)";
+        try{
+            List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, person_id);
+            List<Event> events = new ArrayList<>();
 
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, person_id);
-        List<Event> events = new ArrayList<>();
+            for (Map<String, Object> row : rows){
+                Event e = new Event();
+                e.setId((Integer) row.get("id"));
+                e.setDate((Date) row.get("date"));
+                e.setType((String) row.get("type"));
+                e.setName((String) row.get("name"));
 
-        for (Map<String, Object> row : rows){
-            Event e = new Event();
-            e.setId((Integer) row.get("id"));
-            e.setDate((Date) row.get("date"));
-            e.setType((String) row.get("type"));
-            e.setName((String) row.get("name"));
+                events.add(e);
+            }
 
-            events.add(e);
+            return events;
         }
 
-        return events;
+        catch (Exception e) {
+            System.out.println("Error: " + e.toString());
+            return new ArrayList<>();
+        }
     }
     public boolean personIsMarried(Integer person_id){
         Integer marriages;
@@ -133,17 +150,22 @@ public class EventRepository {
             return false;
         if(divorces == 0)
             return true;
+        try{
+            String sql = "SELECT " +
+                    "DATEDIFF(d.date, m.date) AS date_difference " +
+                    "FROM " +
+                    "(SELECT date FROM event JOIN part_of_event ON event.id = part_of_event.event_id WHERE person_id = ? AND type = 'MARRIAGE' ORDER BY date DESC LIMIT 1) m " +
+                    "JOIN " +
+                    "(SELECT date FROM event JOIN part_of_event ON event.id = part_of_event.event_id WHERE person_id = ? AND type = 'DIVORCE' ORDER BY date DESC LIMIT 1) d " +
+                    "ON 1 = 1;";
 
-        String sql = "SELECT " +
-                "DATEDIFF(d.date, m.date) AS date_difference " +
-                "FROM " +
-                "(SELECT date FROM event JOIN part_of_event ON event.id = part_of_event.event_id WHERE person_id = ? AND type = 'MARRIAGE' ORDER BY date DESC LIMIT 1) m " +
-                "JOIN " +
-                "(SELECT date FROM event JOIN part_of_event ON event.id = part_of_event.event_id WHERE person_id = ? AND type = 'DIVORCE' ORDER BY date DESC LIMIT 1) d " +
-                "ON 1 = 1;";
+            Integer diff_in_days = jdbcTemplate.queryForObject(sql, Integer.class, person_id, person_id);
 
-        Integer diff_in_days = jdbcTemplate.queryForObject(sql, Integer.class, person_id, person_id);
-
-        return diff_in_days != null && diff_in_days <= 0;
+            return diff_in_days != null && diff_in_days <= 0;
+        }
+        catch (Exception e){
+            System.out.println("Error: " + e.toString());
+            return false;
+        }
     }
 }
