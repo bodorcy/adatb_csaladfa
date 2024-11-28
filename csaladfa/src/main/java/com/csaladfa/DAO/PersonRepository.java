@@ -1,6 +1,8 @@
 package com.csaladfa.DAO;
 
+import com.csaladfa.model.Event;
 import com.csaladfa.model.Person;
+import com.csaladfa.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
