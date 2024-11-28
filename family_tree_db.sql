@@ -77,7 +77,7 @@ CREATE TABLE `part_of_event` (
   `person_id` int NOT NULL,
   `role` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`event_id`,`person_id`),
-  KEY `person_id` (`person_id`),
+  KEY `person_id` (`person_id`), --automatikus indexelés a gyorsabb kereséshez
   CONSTRAINT `part_of_event_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`) ON DELETE CASCADE,
   CONSTRAINT `part_of_event_ibfk_2` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
