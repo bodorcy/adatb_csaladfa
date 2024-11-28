@@ -20,7 +20,7 @@ public class EventRepository {
 
     public boolean personAlreadyInEvent(Integer person_id, Integer event_id){
         String sql = "SELECT COUNT(*) FROM part_of_event WHERE event_id = ? AND person_id = ?";
-        return 0 < jdbcTemplate.queryForObject(sql, int.class, person_id, event_id);
+        return 0 < jdbcTemplate.queryForObject(sql, int.class, event_id, person_id);
     }
     public Event getEvent(Integer id){
         Map<String, Object> row = jdbcTemplate.queryForMap("SELECT * FROM event WHERE id = ?", id);
